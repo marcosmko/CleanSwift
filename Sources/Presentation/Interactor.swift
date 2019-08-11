@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit.UIViewController
 
 public protocol InteractorProtocol: class {
     init(viewController: UIViewController)
