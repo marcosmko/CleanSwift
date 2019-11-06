@@ -18,8 +18,8 @@ open class Scene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: 
         return self._interactor
     }
     
-    private var _router: TRouterProtocol!
-    public var router: TRouterProtocol {
+    private var _router: TRouter!
+    public var router: TRouter {
         return self._router
     }
     
@@ -31,7 +31,7 @@ open class Scene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: 
         let interactor = TInteractor(viewController: self)
         let router = TRouter(dataStore: interactor)
         viewController._interactor = interactor as? TInteractorProtocol
-        viewController._router = router as? TRouterProtocol
+        viewController._router = router
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -42,6 +42,14 @@ open class Scene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.setup()
+    }
+    
+    open override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let identifier = segue.identifier else { return }
+        let selector = NSSelectorFromString("routeTo\(identifier)WithSegue:sender:")
+        if router.responds(to: selector) {
+            router.perform(selector, with: segue, with: sender)
+        }
     }
     
 }

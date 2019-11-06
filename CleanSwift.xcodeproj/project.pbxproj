@@ -14,6 +14,7 @@
 		F7C2529722FF5C1B002380BF /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C2529322FF5C1B002380BF /* Router.swift */; };
 		F7C2529822FF5C1B002380BF /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C2529422FF5C1B002380BF /* Presenter.swift */; };
 		F7C2529922FF5C1B002380BF /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C2529522FF5C1B002380BF /* Scene.swift */; };
+		F7E5B42C2361EE97005FF212 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E5B42B2361EE97005FF212 /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +38,7 @@
 		F7C2529322FF5C1B002380BF /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		F7C2529422FF5C1B002380BF /* Presenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
 		F7C2529522FF5C1B002380BF /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		F7E5B42B2361EE97005FF212 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			children = (
 				F7C2529222FF5C1A002380BF /* Interactor.swift */,
 				F7C2529422FF5C1B002380BF /* Presenter.swift */,
+				F7E5B42B2361EE97005FF212 /* ViewModel.swift */,
 				F7C2529322FF5C1B002380BF /* Router.swift */,
 				F7C2529522FF5C1B002380BF /* Scene.swift */,
 			);
@@ -237,6 +240,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7E5B42C2361EE97005FF212 /* ViewModel.swift in Sources */,
 				F7C2529922FF5C1B002380BF /* Scene.swift in Sources */,
 				F7C2529822FF5C1B002380BF /* Presenter.swift in Sources */,
 				F7C2529722FF5C1B002380BF /* Router.swift in Sources */,
