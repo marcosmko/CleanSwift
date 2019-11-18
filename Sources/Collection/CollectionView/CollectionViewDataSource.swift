@@ -21,16 +21,12 @@ public class Section {
 public class CollectionViewDataSource: NSObject {
     
     private weak var collectionView: UICollectionView?
+    
     private var sections: [Section] = []
     private var identifiers: [String: String] = [:]
     
     public init(collectionView: UICollectionView) {
         self.collectionView = collectionView
-    }
-    
-    public func append(sections: [Section]) {
-        self.sections = sections
-        self.collectionView?.reloadData()
     }
     
     public func bind<TCell: GenericCollectionViewCell<TViewModel>, TViewModel: ViewModel>(cell: TCell.Type, to viewModel: TViewModel.Type) {
@@ -41,6 +37,12 @@ public class CollectionViewDataSource: NSObject {
     public func bind<TCell: GenericCollectionViewCell<TViewModel>, TViewModel: ViewModel>(cell: TCell.Type, to viewModel: TViewModel.Type, forSupplementaryViewOfKind kind: String) {
         self.collectionView?.register(UINib(nibName: "\(cell)", bundle: nil), forSupplementaryViewOfKind: kind, withReuseIdentifier: "\(cell)")
         self.identifiers["\(viewModel)"] = "\(cell)"
+    }
+    
+    public func insert(sections: [Section]) {
+        self.sections = sections
+        self.collectionView?.refreshControl?.endRefreshing()
+        self.collectionView?.reloadData()
     }
     
 }

@@ -9,4 +9,9 @@
 import Foundation
 
 public protocol ViewModel {
+    var tag: Int { get }
+}
+
+public extension ViewModel {
+    var tag: Int { return -1 }
 }

@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
     s.authors                   = { 'Marcos Kobuchi' => 'marcos.kobuchi@undercaffeine.com' }
 
     s.platform                  = :ios
-    s.ios.deployment_target     = '8.0'
+    s.ios.deployment_target     = '9.0'
     s.source                    = { :git => 'https://github.com/marcosmko/CleanSwift.git', :tag => s.version.to_s }
 
     s.ios.source_files          = 'Sources/**/*.swift'
