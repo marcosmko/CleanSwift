@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: DataPassing, TRouterProtocol>: Scene<TInteractor, TInteractorProtocol, TRouter, TRouterProtocol> {
+open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: DataPassing, TRouterProtocol>: Scene<TInteractor, TInteractorProtocol, TRouter, TRouterProtocol>, CollectionSceneProtocol {
     
     @IBOutlet public var tableView: UITableView!
     
@@ -17,6 +17,14 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
     override open func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.dataSource = self.dataSource
+    }
+    
+    public func beginRefreshing() {
+        
+    }
+    
+    public func endRefreshing() {
+        
     }
     
 }

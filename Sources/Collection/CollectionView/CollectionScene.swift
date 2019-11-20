@@ -8,37 +8,7 @@
 
 import UIKit
 
-extension UICollectionView {
-    
-    @available(iOS, introduced: 9)
-    override open var refreshControl: UIRefreshControl? {
-        get {
-            if #available(iOS 10.0, *) {
-                return super.refreshControl
-            } else {
-                for subview in self.subviews where subview is UIRefreshControl {
-                    return subview as? UIRefreshControl
-                }
-                return nil
-            }
-        }
-        set {
-            if #available(iOS 10.0, *) {
-                super.refreshControl = newValue
-            } else {
-                self.refreshControl?.removeFromSuperview()
-                if let refreshControl = newValue {
-                    self.addSubview(refreshControl)
-                    self.sendSubviewToBack(refreshControl)
-                    self.alwaysBounceVertical = true
-                }
-            }
-        }
-    }
-    
-}
-
-open class CollectionScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: DataPassing, TRouterProtocol>: Scene<TInteractor, TInteractorProtocol, TRouter, TRouterProtocol> {
+open class CollectionScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: DataPassing, TRouterProtocol>: Scene<TInteractor, TInteractorProtocol, TRouter, TRouterProtocol>, CollectionSceneProtocol {
     
     @IBOutlet public var collectionView: UICollectionView!
     
