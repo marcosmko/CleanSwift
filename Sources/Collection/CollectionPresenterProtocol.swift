@@ -13,6 +13,7 @@ public protocol CollectionPresenterProtocol: PresenterProtocol {
 }
 
 public extension CollectionPresenterProtocol {
+    
     func present(response: CollectionModel.EndRefreshing.Response) {
         QueueManager.shared.execute(BlockOperation(block: {
             for (_, value) in Mirror(reflecting: self).children where value is CollectionDisplayLogic {
@@ -21,4 +22,5 @@ public extension CollectionPresenterProtocol {
             }
         }), on: .main)
     }
+    
 }

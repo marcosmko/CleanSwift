@@ -12,19 +12,37 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
     
     @IBOutlet public var tableView: UITableView!
     
-    public lazy var dataSource = TableViewDataSource(tableView: self.tableView, delegate: self)
+    public lazy var collection = TableViewDataSource(tableView: self.tableView, delegate: self)
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.dataSource = self.dataSource
+        self.tableView.dataSource = self.collection
+        self.checkOverridesRefresh(type: type(of: self))
+        self.setup(collection: self.collection)
+        self.refresh()
     }
     
-    public func beginRefreshing() {
-        
+    open func setup(collection: TableViewDataSource) {
     }
     
-    public func endRefreshing() {
-        
+    open func refresh() {
+    }
+    
+    private func checkOverridesRefresh(type: TableScene.Type) {
+        let originalMethod = class_getInstanceMethod(type, Selector(("refresh")))
+        if originalMethod != nil {
+            let refreshControl = UIRefreshControl()
+            refreshControl.addTarget(self, action: Selector(("refresh")), for: UIControl.Event.valueChanged)
+            self.tableView.refreshControl = refreshControl
+        }
+    }
+    
+    open func beginRefreshing() {
+        self.tableView.refreshControl?.beginRefreshing()
+    }
+    
+    open func endRefreshing() {
+        self.tableView.refreshControl?.endRefreshing()
     }
     
 }

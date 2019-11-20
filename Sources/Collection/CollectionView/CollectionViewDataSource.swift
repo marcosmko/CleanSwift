@@ -8,19 +8,10 @@
 
 import Foundation
 
-public class Section {
-    var viewModel: ViewModel
-    var items: [ViewModel]
-    
-    public init(viewModel: ViewModel, items: [ViewModel]) {
-        self.viewModel = viewModel
-        self.items = items
-    }
-}
-
 public class CollectionViewDataSource: NSObject {
     
     private weak var collectionView: UICollectionView?
+    private weak var delegate: NSObject?
     
     private var sections: [Section] = []
     private var identifiers: [String: String] = [:]
@@ -64,6 +55,7 @@ extension CollectionViewDataSource: UICollectionViewDataSource {
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
         (cell as? GenericCellProtocol)?.prepare(viewModel: item)
+        (cell as? GenericCellDelegateProtocol)?.prepare(indexPath: indexPath, delegate: self.delegate)
         return cell
     }
     

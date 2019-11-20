@@ -37,7 +37,7 @@ open class CollectionScene<TInteractor: InteractorProtocol, TInteractorProtocol,
         if originalMethod != nil {
             let refreshControl = UIRefreshControl()
             refreshControl.addTarget(self, action: Selector(("refresh")), for: UIControl.Event.valueChanged)
-            collectionView.refreshControl = refreshControl
+            self.collectionView.refreshControl = refreshControl
         }
     }
     

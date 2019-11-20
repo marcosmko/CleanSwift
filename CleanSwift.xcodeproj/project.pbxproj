@@ -16,6 +16,11 @@
 		F79BD7222385C05000341288 /* CollectionDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79BD7212385C05000341288 /* CollectionDisplayLogic.swift */; };
 		F79BD7242385C06100341288 /* CollectionPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79BD7232385C06100341288 /* CollectionPresenterProtocol.swift */; };
 		F79BD7262385C07100341288 /* CollectionSceneProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79BD7252385C07100341288 /* CollectionSceneProtocol.swift */; };
+		F79BD7282385C43200341288 /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79BD7272385C43200341288 /* UITableViewExtension.swift */; };
+		F79BD72A2385C63B00341288 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79BD7292385C63B00341288 /* Section.swift */; };
+		F79BD72C2385C68C00341288 /* GenericDelegateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79BD72B2385C68C00341288 /* GenericDelegateCollectionViewCell.swift */; };
+		F79BD7302385C88600341288 /* GenericCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79BD72F2385C88600341288 /* GenericCellDelegate.swift */; };
+		F79BD7322385C8B900341288 /* GenericCellDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79BD7312385C8B900341288 /* GenericCellDelegateProtocol.swift */; };
 		F7AB0A73237AE646006E6141 /* GenericCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AB0A72237AE646006E6141 /* GenericCollectionViewCell.swift */; };
 		F7B15830237AEE1800FB4902 /* GenericCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B1582F237AEE1800FB4902 /* GenericCellProtocol.swift */; };
 		F7B15834237AEEE200FB4902 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B15833237AEEE200FB4902 /* TableViewDataSource.swift */; };
@@ -52,6 +57,11 @@
 		F79BD7212385C05000341288 /* CollectionDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDisplayLogic.swift; sourceTree = "<group>"; };
 		F79BD7232385C06100341288 /* CollectionPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionPresenterProtocol.swift; sourceTree = "<group>"; };
 		F79BD7252385C07100341288 /* CollectionSceneProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSceneProtocol.swift; sourceTree = "<group>"; };
+		F79BD7272385C43200341288 /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
+		F79BD7292385C63B00341288 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		F79BD72B2385C68C00341288 /* GenericDelegateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericDelegateCollectionViewCell.swift; sourceTree = "<group>"; };
+		F79BD72F2385C88600341288 /* GenericCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCellDelegate.swift; sourceTree = "<group>"; };
+		F79BD7312385C8B900341288 /* GenericCellDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCellDelegateProtocol.swift; sourceTree = "<group>"; };
 		F7AB0A72237AE646006E6141 /* GenericCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7B1582F237AEE1800FB4902 /* GenericCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCellProtocol.swift; sourceTree = "<group>"; };
 		F7B15833237AEEE200FB4902 /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
@@ -95,8 +105,19 @@
 			children = (
 				F7944E1E237AE7100066E9A2 /* CollectionExtension.swift */,
 				F79BD71D2385C01900341288 /* UICollectionViewExtension.swift */,
+				F79BD7272385C43200341288 /* UITableViewExtension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F79BD7332385C8D700341288 /* GenericCell */ = {
+			isa = PBXGroup;
+			children = (
+				F7B1582F237AEE1800FB4902 /* GenericCellProtocol.swift */,
+				F79BD72F2385C88600341288 /* GenericCellDelegate.swift */,
+				F79BD7312385C8B900341288 /* GenericCellDelegateProtocol.swift */,
+			);
+			path = GenericCell;
 			sourceTree = "<group>";
 		};
 		F7AB0A71237AE636006E6141 /* Collection */ = {
@@ -106,7 +127,8 @@
 				F79BD71F2385C03C00341288 /* CollectionModel.swift */,
 				F79BD7232385C06100341288 /* CollectionPresenterProtocol.swift */,
 				F79BD7252385C07100341288 /* CollectionSceneProtocol.swift */,
-				F7B1582F237AEE1800FB4902 /* GenericCellProtocol.swift */,
+				F79BD7292385C63B00341288 /* Section.swift */,
+				F79BD7332385C8D700341288 /* GenericCell */,
 				F7B15831237AEEB300FB4902 /* CollectionView */,
 				F7B15832237AEEC100FB4902 /* TableView */,
 			);
@@ -119,6 +141,7 @@
 				F776113C237B0F570092997D /* CollectionScene.swift */,
 				F7944E1B237AE6EB0066E9A2 /* CollectionViewDataSource.swift */,
 				F7AB0A72237AE646006E6141 /* GenericCollectionViewCell.swift */,
+				F79BD72B2385C68C00341288 /* GenericDelegateCollectionViewCell.swift */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
@@ -329,16 +352,21 @@
 				F7AB0A73237AE646006E6141 /* GenericCollectionViewCell.swift in Sources */,
 				F7E5B42C2361EE97005FF212 /* ViewModel.swift in Sources */,
 				F776113B237B0C750092997D /* TableScene.swift in Sources */,
+				F79BD7322385C8B900341288 /* GenericCellDelegateProtocol.swift in Sources */,
 				F7C2529922FF5C1B002380BF /* Scene.swift in Sources */,
 				F7C2529822FF5C1B002380BF /* Presenter.swift in Sources */,
+				F79BD7282385C43200341288 /* UITableViewExtension.swift in Sources */,
 				F79BD7242385C06100341288 /* CollectionPresenterProtocol.swift in Sources */,
 				F7DA6B1A237AF6C4000287FB /* GenericDelegateTableViewCell.swift in Sources */,
 				F79BD7262385C07100341288 /* CollectionSceneProtocol.swift in Sources */,
+				F79BD7302385C88600341288 /* GenericCellDelegate.swift in Sources */,
 				F7C2529722FF5C1B002380BF /* Router.swift in Sources */,
 				F7944E1F237AE7100066E9A2 /* CollectionExtension.swift in Sources */,
 				F79BD7222385C05000341288 /* CollectionDisplayLogic.swift in Sources */,
 				F776113D237B0F570092997D /* CollectionScene.swift in Sources */,
 				F7B15836237AEF0000FB4902 /* GenericTableViewCell.swift in Sources */,
+				F79BD72C2385C68C00341288 /* GenericDelegateCollectionViewCell.swift in Sources */,
+				F79BD72A2385C63B00341288 /* Section.swift in Sources */,
 				F7B15834237AEEE200FB4902 /* TableViewDataSource.swift in Sources */,
 				F79BD71E2385C01900341288 /* UICollectionViewExtension.swift in Sources */,
 				F7C2529622FF5C1B002380BF /* Interactor.swift in Sources */,
