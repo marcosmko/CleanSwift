@@ -21,11 +21,6 @@ public class TableViewDataSource: NSObject {
         self.delegate = delegate
     }
     
-    public func append(sections: [Section]) {
-        self.sections = sections
-        self.tableView?.reloadData()
-    }
-    
     public func bind<TCell: GenericTableViewCell<TViewModel>, TViewModel: ViewModel>(cell: TCell.Type, to viewModel: TViewModel.Type) {
         self.tableView?.register(UINib(nibName: "\(cell)", bundle: nil), forCellReuseIdentifier: "\(cell)")
         self.identifiers["\(viewModel)"] = "\(cell)"
@@ -34,6 +29,12 @@ public class TableViewDataSource: NSObject {
     public func bind<TCell: GenericTableViewCell<TViewModel>, TViewModel: ViewModel>(cell: TCell.Type, to viewModel: TViewModel.Type, forSupplementaryViewOfKind kind: String) {
         self.tableView?.register(UINib(nibName: "\(cell)", bundle: nil), forHeaderFooterViewReuseIdentifier: "\(cell)")
         self.identifiers["\(viewModel)"] = "\(cell)"
+    }
+    
+    public func insert(sections: [Section]) {
+        self.sections = sections
+        self.tableView?.refreshControl?.endRefreshing()
+        self.tableView?.reloadData()
     }
     
 }
