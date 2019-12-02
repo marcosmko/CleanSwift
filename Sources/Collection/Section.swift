@@ -9,8 +9,8 @@
 import Foundation
 
 public class Section {
-    var viewModel: ViewModel?
-    var items: [ViewModel]
+    public var viewModel: ViewModel?
+    public var items: [ViewModel]
     
     public init(viewModel: ViewModel? = nil, items: [ViewModel]) {
         self.viewModel = viewModel
