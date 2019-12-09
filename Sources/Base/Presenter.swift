@@ -12,7 +12,7 @@ public protocol PresenterProtocol: class {
     init(viewController: UIViewController)
 }
 
-open class Presenter<TDisplayLogic> {
+open class Presenter<TDisplayLogic>: CustomReflectable {
     
     private weak var _viewController: UIViewController?
     public var viewController: TDisplayLogic {
@@ -25,4 +25,7 @@ open class Presenter<TDisplayLogic> {
         precondition(self is PresenterProtocol, "\(type(of: self)) must inherit from \(PresenterProtocol.self)")
     }
     
+    public var customMirror: Mirror {
+        return Mirror(self, children: ["viewController": self.viewController])
+    }
 }
