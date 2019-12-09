@@ -8,20 +8,24 @@
 
 import Foundation
 
+@objc
 public protocol RouterProtocol: class {
 }
 
-public protocol DataPassing: class {
-    init(dataStore: Any)
+public protocol DataPassing: NSObjectProtocol {
+    init(dataStore: Any, viewController: UIViewController)
 }
 
-open class Router<TDataStore> {
+open class Router<TDataStore>: NSObject {
     
-    public let dataStore: TDataStore
+    public weak var viewController: UIViewController!
+    public var dataStore: TDataStore
     
-    public required init(dataStore: Any) {
+    public required init(dataStore: Any, viewController: UIViewController) {
         precondition(dataStore.self is TDataStore, "\(dataStore.self) must inherit from \(TDataStore.self)")
         self.dataStore = dataStore as! TDataStore
+        self.viewController = viewController
+        super.init()
         precondition(self is RouterProtocol, "\(type(of: self)) must inherit from \(RouterProtocol.self)")
         precondition(self is DataPassing, "\(type(of: self)) must inherit from \(DataPassing.self)")
     }
