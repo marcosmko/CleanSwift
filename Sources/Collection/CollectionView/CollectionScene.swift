@@ -23,6 +23,7 @@ open class CollectionScene<TInteractor: InteractorProtocol, TInteractorProtocol,
     }
     
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         self.collectionView.collectionViewLayout.invalidateLayout()
     }
     
