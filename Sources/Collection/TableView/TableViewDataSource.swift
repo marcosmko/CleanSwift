@@ -8,16 +8,30 @@
 
 import Foundation
 
+protocol TableViewDataSourcePrefetching: class {
+    func tableViewPrefetch()
+}
+
 public class TableViewDataSource: NSObject {
     
     private weak var tableView: UITableView?
-    private weak var delegate: NSObject?
+    internal weak var delegate: NSObject?
+    internal weak var dataSourcePrefetching: TableViewDataSourcePrefetching?
     
-    private var sections: [Section] = []
+    internal var sections: [Section] = []
     private var identifiers: [String: String] = [:]
+    
+    private var shouldClear: Bool = false
+    internal var pageSize: Int = -1
     
     public init(tableView: UITableView, delegate: NSObject? = nil) {
         self.tableView = tableView
+        self.delegate = delegate
+    }
+    
+    init(tableView: UITableView, dataSourcePrefetching: TableViewDataSourcePrefetching, delegate: NSObject? = nil) {
+        self.tableView = tableView
+        self.dataSourcePrefetching = dataSourcePrefetching
         self.delegate = delegate
     }
     
@@ -31,9 +45,41 @@ public class TableViewDataSource: NSObject {
         self.identifiers["\(viewModel)"] = "\(cell)"
     }
     
+    public func clear() {
+        self.shouldClear = true
+    }
+    
     public func insert(sections: [Section]) {
-        self.sections = sections
+        if self.shouldClear || self.sections.isEmpty {
+            // clear and reload
+            self.sections = sections
+            self.shouldClear = false
+            self.tableView?.reloadData()
+        } else {
+            // append to end
+            var indexPaths: [IndexPath] = []
+            for (xIndex, section) in self.sections.enumerated() {
+                for newSection in sections where section.viewModel?.tag == newSection.viewModel?.tag {
+                    let currentCount = section.items.count
+                    let newCount = newSection.items.count
+                    for current in currentCount..<currentCount+newCount {
+                        indexPaths.append(IndexPath(row: current, section: xIndex))
+                    }
+                    section.items.append(contentsOf: newSection.items)
+                }
+            }
+            self.tableView?.beginUpdates()
+            self.tableView?.insertRows(at: indexPaths, with: .fade)
+            self.tableView?.endUpdates()
+            // must check for new sections
+        }
         self.tableView?.refreshControl?.endRefreshing()
+    }
+    
+    public func remove(sections: [IndexPath]) {
+        for indexPath in sections.sorted().reversed() {
+            self.sections[indexPath.section].items.remove(at: indexPath.row)
+        }
         self.tableView?.reloadData()
     }
     
@@ -58,6 +104,19 @@ extension TableViewDataSource: UITableViewDataSource {
         (cell as? GenericCellProtocol)?.prepare(viewModel: item)
         (cell as? GenericCellDelegateProtocol)?.prepare(indexPath: indexPath, delegate: self.delegate)
         return cell
+    }
+    
+}
+
+extension TableViewDataSource: UITableViewDataSourcePrefetching {
+    
+    public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        // check if we need to prefetch new items
+        guard let indexPath = indexPaths.last,
+            indexPath.row > self.sections[indexPath.section].items.count - self.pageSize else {
+                return
+        }
+        self.dataSourcePrefetching?.tableViewPrefetch()
     }
     
 }
