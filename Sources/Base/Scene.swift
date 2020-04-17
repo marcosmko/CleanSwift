@@ -42,7 +42,7 @@ open class Scene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: 
         viewController._router = router
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.setup()
     }
