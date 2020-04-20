@@ -10,6 +10,7 @@ import UIKit
 
 protocol TableDisplayLogic: DisplayLogic {
     func display(viewModel: TableModel.GetPosts.ViewModel)
+    func display(viewModel: TableModel.UpdatePosts.ViewModel)
 }
 
 open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: DataPassing, TRouterProtocol>: Scene<TInteractor, TInteractorProtocol, TRouter, TRouterProtocol>, CollectionSceneProtocol, TableDisplayLogic, UITableViewDelegate {
@@ -106,6 +107,10 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
     
     func display(viewModel: TableModel.GetPosts.ViewModel) {
         self.collection.insert(sections: viewModel.sections)
+    }
+    
+    func display(viewModel: TableModel.UpdatePosts.ViewModel) {
+        self.collection.update(sections: viewModel.sections)
     }
     
 }

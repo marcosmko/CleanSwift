@@ -76,6 +76,27 @@ public class TableViewDataSource: NSObject {
         self.tableView?.refreshControl?.endRefreshing()
     }
     
+    public func update(sections: [Section]) {
+        var indexPaths: [IndexPath] = []
+        for (xIndex, section) in self.sections.enumerated() {
+            for newSection in sections where section.viewModel?.tag == newSection.viewModel?.tag {
+                var items = section.items
+                
+                for (row, item) in section.items.enumerated() {
+                    for item3 in newSection.items where item.tag == item3.tag {
+                        items[row] = item3
+                        indexPaths.append(IndexPath(row: row, section: xIndex))
+                    }
+                }
+                
+                section.items = items
+            }
+        }
+        self.tableView?.beginUpdates()
+        self.tableView?.reloadRows(at: indexPaths, with: .automatic)
+        self.tableView?.endUpdates()
+    }
+    
     public func remove(sections: [IndexPath]) {
         for indexPath in sections.sorted().reversed() {
             self.sections[indexPath.section].items.remove(at: indexPath.row)

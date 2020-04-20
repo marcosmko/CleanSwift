@@ -10,6 +10,7 @@ import Foundation
 
 public protocol TablePresenterProtocol: CollectionPresenterProtocol {
     func present(response: TableModel.GetPosts.Response)
+    func present(response: TableModel.UpdatePosts.Response)
 }
 
 open class TablePresenter<TDisplayLogic, TEntity>: Presenter<TDisplayLogic> {
@@ -22,6 +23,17 @@ open class TablePresenter<TDisplayLogic, TEntity>: Presenter<TDisplayLogic> {
             }
             let section = Section(items: items)
             (self.viewController as? TableDisplayLogic)?.display(viewModel: TableModel.GetPosts.ViewModel(sections: [section]))
+        }), on: .main)
+    }
+    
+    public func present(response: TableModel.UpdatePosts.Response) {
+        QueueManager.shared.execute(BlockOperation(block: {
+            var items: [ViewModel] = []
+            for item in response.objects {
+                items.append(self.prepare(object: item as! TEntity))
+            }
+            let section = Section(items: items)
+            (self.viewController as? TableDisplayLogic)?.display(viewModel: TableModel.UpdatePosts.ViewModel(sections: [section]))
         }), on: .main)
     }
     
