@@ -21,6 +21,16 @@ public enum TableModel {
         }
     }
     
+    public enum UpdatePosts {
+        public struct Response {
+            public init(objects: [Any]) { self.objects = objects }
+            let objects: [Any]
+        }
+        public struct ViewModel {
+            let sections: [Section]
+        }
+    }
+    
     public enum SetClear {
         public struct Request {
         }
