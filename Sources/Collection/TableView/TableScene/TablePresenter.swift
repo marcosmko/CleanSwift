@@ -18,23 +18,39 @@ open class TablePresenter<TDisplayLogic, TEntity>: Presenter<TDisplayLogic> {
     public func present(response: TableModel.GetPosts.Response) {
         QueueManager.shared.execute(BlockOperation(block: {
             var items: [ViewModel] = []
+            
             for item in response.objects {
                 items.append(self.prepare(object: item as! TEntity))
             }
-            let section = Section(items: items)
-            (self.viewController as? TableDisplayLogic)?.display(viewModel: TableModel.GetPosts.ViewModel(sections: [section]))
+            
+            let section = Section(viewModel: self.viewModel(), items: items, reload: response.reload)
+            (self.viewController as? TableDisplayLogic)?.display(
+                viewModel: TableModel.GetPosts.ViewModel(
+                    sections: [section], reload: response.reload
+                )
+            )
         }), on: .main)
     }
     
     public func present(response: TableModel.UpdatePosts.Response) {
         QueueManager.shared.execute(BlockOperation(block: {
             var items: [ViewModel] = []
+            
             for item in response.objects {
                 items.append(self.prepare(object: item as! TEntity))
             }
-            let section = Section(items: items)
-            (self.viewController as? TableDisplayLogic)?.display(viewModel: TableModel.UpdatePosts.ViewModel(sections: [section]))
+            
+            let section = Section(viewModel: self.viewModel(), items: items)
+            (self.viewController as? TableDisplayLogic)?.display(
+                viewModel: TableModel.UpdatePosts.ViewModel(
+                    sections: [section]
+                )
+            )
         }), on: .main)
+    }
+    
+    open func viewModel() -> ViewModel? {
+        return nil
     }
     
     open func prepare(object: TEntity) -> ViewModel {

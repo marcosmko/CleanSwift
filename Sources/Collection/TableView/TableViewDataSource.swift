@@ -57,23 +57,40 @@ public class TableViewDataSource: NSObject {
             self.tableView?.reloadData()
         } else {
             // append to end
+            var sections = sections
             var indexPaths: [IndexPath] = []
+            var forceReload: Bool = false
+            
             for (xIndex, section) in self.sections.enumerated() {
-                for newSection in sections where section.viewModel?.tag == newSection.viewModel?.tag {
+                for (index, newSection) in sections.enumerated() where section.viewModel?.tag == newSection.viewModel?.tag {
+                    if newSection.reload {
+                        section.items.removeAll()
+                        forceReload = true
+                    }
+                    
                     let currentCount = section.items.count
                     let newCount = newSection.items.count
                     for current in currentCount..<currentCount+newCount {
                         indexPaths.append(IndexPath(row: current, section: xIndex))
                     }
+                    
                     section.items.append(contentsOf: newSection.items)
+                    sections.remove(at: index)
                 }
             }
-            self.tableView?.beginUpdates()
-            self.tableView?.insertRows(at: indexPaths, with: .fade)
-            self.tableView?.endUpdates()
-            // must check for new sections
+            
+            if !sections.isEmpty || forceReload {
+                self.sections.append(contentsOf: sections)
+                self.tableView?.reloadData()
+            } else if !indexPaths.isEmpty {
+                self.tableView?.beginUpdates()
+                self.tableView?.insertRows(at: indexPaths, with: .fade)
+                self.tableView?.endUpdates()
+            }
         }
-        self.tableView?.refreshControl?.endRefreshing()
+        if self.tableView?.refreshControl?.isRefreshing ?? false {
+            self.tableView?.refreshControl?.endRefreshing()
+        }
     }
     
     public func update(sections: [Section]) {

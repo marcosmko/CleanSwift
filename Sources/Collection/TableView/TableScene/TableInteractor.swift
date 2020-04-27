@@ -13,7 +13,7 @@ public protocol TableInteractorProtocol: InteractorProtocol {
     func reload(request: TableModel.SetClear.Request)
 }
 
-protocol TableDataSource: class {
+internal protocol TableDataSource: class {
     var pageSize: Int { get set }
 }
 
@@ -25,13 +25,14 @@ open class TableInteractor<TPresenter: TablePresenterProtocol, TPresenterProtoco
     private var hasNext: Bool = true
     private var loading: Bool = false
     internal var pageSize: Int = -1
+    
     public private(set) var objects: [TEntity] = []
     
     public enum UITimelineError: Error {
         case unknown
     }
     
-    func clearOnNextLoad() {
+    internal func clearOnNextLoad() {
         self.lock.lock()
         defer { self.lock.unlock() }
         
@@ -41,16 +42,9 @@ open class TableInteractor<TPresenter: TablePresenterProtocol, TPresenterProtoco
         self.timestamp = Date()
     }
     
-    func update(tag: Int) {
-//        DispatchQueue.async {
-//            guard let object = self.find(tag) else { return }
-//            self.post(action: "update", tag: tag, any: self.prepare(object: object))
-//        }
-    }
-    
     public func reload(request: TableModel.SetClear.Request) {
         self.clearOnNextLoad()
-        self.fetch(request: TableModel.GetPosts.Request())
+        self.fetch(request: TableModel.GetPosts.Request(reload: true))
     }
     
     public func fetch(request: TableModel.GetPosts.Request) {
@@ -79,7 +73,9 @@ open class TableInteractor<TPresenter: TablePresenterProtocol, TPresenterProtoco
                 self.offset += self.pageSize
                 self.loading = false
                 
-                (self.presenter as? TablePresenterProtocol)?.present(response: TableModel.GetPosts.Response(objects: objects))
+                (self.presenter as? TablePresenterProtocol)?.present(response: TableModel.GetPosts.Response(objects: objects, reload: request.reload))
+                
+                self.didFetchMoreRows()
             } catch {
                 self.lock.lock()
                 defer { self.lock.unlock() }
@@ -93,6 +89,9 @@ open class TableInteractor<TPresenter: TablePresenterProtocol, TPresenterProtoco
     
     open func fetch(offset: Int, size: Int) throws -> [TEntity] {
         preconditionFailure("Should be overwritten.")
+    }
+    
+    open func didFetchMoreRows() {
     }
     
 }
