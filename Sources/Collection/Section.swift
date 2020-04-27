@@ -11,9 +11,11 @@ import Foundation
 public class Section {
     public var viewModel: ViewModel?
     public var items: [ViewModel]
+    public var reload: Bool
     
-    public init(viewModel: ViewModel? = nil, items: [ViewModel]) {
+    public init(viewModel: ViewModel? = nil, items: [ViewModel], reload: Bool = false) {
         self.viewModel = viewModel
         self.items = items
+        self.reload = reload
     }
 }

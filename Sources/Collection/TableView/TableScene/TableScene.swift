@@ -13,7 +13,7 @@ protocol TableDisplayLogic: DisplayLogic {
     func display(viewModel: TableModel.UpdatePosts.ViewModel)
 }
 
-open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: DataPassing, TRouterProtocol>: Scene<TInteractor, TInteractorProtocol, TRouter, TRouterProtocol>, CollectionSceneProtocol, TableDisplayLogic, UITableViewDelegate {
+open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: DataPassing, TRouterProtocol>: Scene<TInteractor, TInteractorProtocol, TRouter, TRouterProtocol>, CollectionSceneProtocol, TableDisplayLogic {
     
     @IBOutlet public private(set) var tableView: UITableView! {
         didSet {
@@ -25,13 +25,21 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
         }
     }
     
-    public lazy var collection = TableViewDataSource(tableView: self.tableView, dataSourcePrefetching: self, delegate: self)
+    public lazy var collection =
+        TableViewDataSource(
+            tableView: self.tableView,
+            dataSourcePrefetching: self,
+            delegate: self
+    )
+    
     public var pageSize: Int = -1 {
         didSet {
             self.collection.pageSize = self.pageSize
             (self.interactor as? TableDataSource)?.pageSize = self.pageSize
         }
     }
+    
+    private var heights: [IndexPath: CGFloat] = [:]
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +74,6 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
     }
     
     open func refresh() {
-        self.collection.clear()
         (self.interactor as? TableInteractorProtocol)?.reload(request: TableModel.SetClear.Request())
     }
     
@@ -79,30 +86,16 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
         }
     }
     
-    private func checkIsInfiniteScroll() {
-        if self.interactor is TableInteractorProtocol {
-            if #available(iOS 10.0, *) {
-                self.tableView.prefetchDataSource = self.collection
-            } else {
-                self.tableView.delegate = self
-            }
-        }
-    }
-    
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if #available(iOS 10.0, *) { } else {
-            if (scrollView.contentOffset.y) >= (scrollView.contentSize.height - 2 * scrollView.frame.size.height) {
-                (self.interactor as? TableInteractorProtocol)?.fetch(request: TableModel.GetPosts.Request())
-            }
-        }
-    }
-    
     open func beginRefreshing() {
         self.tableView.refreshControl?.beginRefreshing()
     }
     
     open func endRefreshing() {
         self.tableView.refreshControl?.endRefreshing()
+    }
+    
+    public func clearCache() {
+        self.heights = [:]
     }
     
     func display(viewModel: TableModel.GetPosts.ViewModel) {
@@ -113,12 +106,44 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
         self.collection.update(sections: viewModel.sections)
     }
     
+    private func checkIsInfiniteScroll() {
+        if self.interactor is TableInteractorProtocol {
+            if #available(iOS 10.0, *) {
+                self.tableView.prefetchDataSource = self.collection
+            } else {
+                self.tableView.delegate = self as? UITableViewDelegate
+            }
+        }
+    }
+    
+    // This will be used for to fetch more rows automatically for iOS < 10
+    @objc
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if #available(iOS 10.0, *) { } else {
+            if (scrollView.contentOffset.y) >= (scrollView.contentSize.height - 2 * scrollView.frame.size.height) {
+                (self.interactor as? TableInteractorProtocol)?.fetch(request: TableModel.GetPosts.Request(reload: false))
+            }
+        }
+    }
+    
+    // This will be used to cache cell height
+    @objc
+    public func tableView(_ tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath) {
+        return self.heights[indexPath] = cell.bounds.height
+    }
+    
+    // This will be used to return pre calculated height
+    @objc
+    open func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
+        return self.heights[indexPath] ?? UITableView.automaticDimension
+    }
+    
 }
 
 extension TableScene: TableViewDataSourcePrefetching {
     
     func tableViewPrefetch() {
-        (self.interactor as? TableInteractorProtocol)?.fetch(request: TableModel.GetPosts.Request())
+        (self.interactor as? TableInteractorProtocol)?.fetch(request: TableModel.GetPosts.Request(reload: false))
     }
     
 }
