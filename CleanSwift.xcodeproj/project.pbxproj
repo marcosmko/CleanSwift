@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F71EEE3A24488BAA00A633E1 /* TableInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71EEE3924488BAA00A633E1 /* TableInteractor.swift */; };
+		F71EEE3C24488BB700A633E1 /* TablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71EEE3B24488BB700A633E1 /* TablePresenter.swift */; };
+		F71EEE3E2448B33000A633E1 /* TableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71EEE3D2448B33000A633E1 /* TableModel.swift */; };
 		F72D6BEA238851E500FCA9E0 /* StaticTableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72D6BE9238851E500FCA9E0 /* StaticTableScene.swift */; };
 		F776113B237B0C750092997D /* TableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776113A237B0C750092997D /* TableScene.swift */; };
 		F776113D237B0F570092997D /* CollectionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776113C237B0F570092997D /* CollectionScene.swift */; };
@@ -49,6 +52,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F71EEE3924488BAA00A633E1 /* TableInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableInteractor.swift; sourceTree = "<group>"; };
+		F71EEE3B24488BB700A633E1 /* TablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TablePresenter.swift; sourceTree = "<group>"; };
+		F71EEE3D2448B33000A633E1 /* TableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableModel.swift; sourceTree = "<group>"; };
 		F72D6BE9238851E500FCA9E0 /* StaticTableScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticTableScene.swift; sourceTree = "<group>"; };
 		F776113A237B0C750092997D /* TableScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableScene.swift; sourceTree = "<group>"; };
 		F776113C237B0F570092997D /* CollectionScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionScene.swift; sourceTree = "<group>"; };
@@ -102,6 +108,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F71EEE3F2448B34500A633E1 /* TableScene */ = {
+			isa = PBXGroup;
+			children = (
+				F776113A237B0C750092997D /* TableScene.swift */,
+				F71EEE3B24488BB700A633E1 /* TablePresenter.swift */,
+				F71EEE3D2448B33000A633E1 /* TableModel.swift */,
+				F71EEE3924488BAA00A633E1 /* TableInteractor.swift */,
+			);
+			path = TableScene;
+			sourceTree = "<group>";
+		};
 		F72D6BE8238851D100FCA9E0 /* StaticTableScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,9 +177,9 @@
 			isa = PBXGroup;
 			children = (
 				F72D6BE8238851D100FCA9E0 /* StaticTableScene */,
+				F71EEE3F2448B34500A633E1 /* TableScene */,
 				F7DA6B19237AF6C4000287FB /* GenericDelegateTableViewCell.swift */,
 				F7B15835237AEF0000FB4902 /* GenericTableViewCell.swift */,
-				F776113A237B0C750092997D /* TableScene.swift */,
 				F7B15833237AEEE200FB4902 /* TableViewDataSource.swift */,
 			);
 			path = TableView;
@@ -359,6 +376,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F71EEE3E2448B33000A633E1 /* TableModel.swift in Sources */,
 				F7EF85ED2385B7FE003B5450 /* QueueManager.swift in Sources */,
 				F7AB0A73237AE646006E6141 /* GenericCollectionViewCell.swift in Sources */,
 				F7E5B42C2361EE97005FF212 /* ViewModel.swift in Sources */,
@@ -370,11 +388,13 @@
 				F79BD7282385C43200341288 /* UITableViewExtension.swift in Sources */,
 				F79BD7242385C06100341288 /* CollectionPresenterProtocol.swift in Sources */,
 				F7DA6B1A237AF6C4000287FB /* GenericDelegateTableViewCell.swift in Sources */,
+				F71EEE3C24488BB700A633E1 /* TablePresenter.swift in Sources */,
 				F79BD7262385C07100341288 /* CollectionSceneProtocol.swift in Sources */,
 				F79BD7302385C88600341288 /* GenericCellDelegate.swift in Sources */,
 				F7C2529722FF5C1B002380BF /* Router.swift in Sources */,
 				F7944E1F237AE7100066E9A2 /* CollectionExtension.swift in Sources */,
 				F79BD7222385C05000341288 /* CollectionDisplayLogic.swift in Sources */,
+				F71EEE3A24488BAA00A633E1 /* TableInteractor.swift in Sources */,
 				F776113D237B0F570092997D /* CollectionScene.swift in Sources */,
 				F7B15836237AEF0000FB4902 /* GenericTableViewCell.swift in Sources */,
 				F79BD72C2385C68C00341288 /* GenericDelegateCollectionViewCell.swift in Sources */,

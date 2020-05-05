@@ -15,8 +15,8 @@ public protocol PresenterProtocol: class {
 open class Presenter<TDisplayLogic>: CustomReflectable {
     
     private weak var _viewController: UIViewController?
-    public var viewController: TDisplayLogic {
-        return self._viewController as! TDisplayLogic
+    public var viewController: TDisplayLogic? {
+        return self._viewController as? TDisplayLogic
     }
     
     public required init(viewController: UIViewController) {
