@@ -8,32 +8,16 @@
 
 import Foundation
 
-public class CollectionViewDataSource: NSObject {
-    
-    private weak var collectionView: UICollectionView?
-    private weak var delegate: NSObject?
-    
-    private var sections: [Section] = []
-    private var identifiers: [String: String] = [:]
-    
-    public init(collectionView: UICollectionView) {
-        self.collectionView = collectionView
-    }
+public class CollectionViewDataSource: GenericCollectionDataSource<UICollectionView> {
     
     public func bind<TCell: GenericCollectionViewCell<TViewModel>, TViewModel: ViewModel>(cell: TCell.Type, to viewModel: TViewModel.Type) {
-        self.collectionView?.register(UINib(nibName: "\(cell)", bundle: nil), forCellWithReuseIdentifier: "\(cell)")
+        self.collection?.register(UINib(nibName: "\(cell)", bundle: nil), forCellWithReuseIdentifier: "\(cell)")
         self.identifiers["\(viewModel)"] = "\(cell)"
     }
     
     public func bind<TCell: GenericCollectionViewCell<TViewModel>, TViewModel: ViewModel>(cell: TCell.Type, to viewModel: TViewModel.Type, forSupplementaryViewOfKind kind: String) {
-        self.collectionView?.register(UINib(nibName: "\(cell)", bundle: nil), forSupplementaryViewOfKind: kind, withReuseIdentifier: "\(cell)")
+        self.collection?.register(UINib(nibName: "\(cell)", bundle: nil), forSupplementaryViewOfKind: kind, withReuseIdentifier: "\(cell)")
         self.identifiers["\(viewModel)"] = "\(cell)"
-    }
-    
-    public func insert(sections: [Section]) {
-        self.sections = sections
-        self.collectionView?.refreshControl?.endRefreshing()
-        self.collectionView?.reloadData()
     }
     
 }
@@ -67,6 +51,19 @@ extension CollectionViewDataSource: UICollectionViewDataSource {
         let reusableSupplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: identifier, for: indexPath)
         (reusableSupplementaryView as? GenericCellProtocol)?.prepare(viewModel: item)
         return reusableSupplementaryView
+    }
+    
+}
+
+extension CollectionViewDataSource: UICollectionViewDataSourcePrefetching {
+    
+    public func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        // check if we need to prefetch new items
+        guard let indexPath = indexPaths.last,
+            indexPath.row > self.sections[indexPath.section].items.count - self.pageSize else {
+                return
+        }
+        self.dataSourcePrefetching?.prefetch()
     }
     
 }

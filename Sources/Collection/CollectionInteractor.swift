@@ -1,5 +1,5 @@
 //
-//  TableInteractor.swift
+//  CollectionInteractor.swift
 //  CleanSwift
 //
 //  Created by Marcos Kobuchi on 16/04/20.
@@ -8,16 +8,16 @@
 
 import Foundation
 
-public protocol TableInteractorProtocol: InteractorProtocol {
-    func fetch(request: TableModel.GetPosts.Request)
-    func reload(request: TableModel.SetClear.Request)
+public protocol CollectionInteractorProtocol: InteractorProtocol {
+    func fetch(request: CollectionModel.Get.Request)
+    func reload(request: CollectionModel.SetClear.Request)
 }
 
-internal protocol TableDataSource: class {
+internal protocol CollectionDataSource: class {
     var pageSize: Int { get set }
 }
 
-open class TableInteractor<TPresenter: TablePresenterProtocol, TPresenterProtocol, TEntity>: Interactor<TPresenter, TPresenterProtocol>, TableDataSource {
+open class CollectionInteractor<TPresenter: CollectionPresenterProtocol, TPresenterProtocol, TEntity>: Interactor<TPresenter, TPresenterProtocol>, CollectionDataSource {
     
     private var timestamp: Date = Date()
     private let lock = NSLock()
@@ -42,12 +42,12 @@ open class TableInteractor<TPresenter: TablePresenterProtocol, TPresenterProtoco
         self.timestamp = Date()
     }
     
-    public func reload(request: TableModel.SetClear.Request) {
+    public func reload(request: CollectionModel.SetClear.Request) {
         self.clearOnNextLoad()
-        self.fetch(request: TableModel.GetPosts.Request(reload: true))
+        self.fetch(request: CollectionModel.Get.Request(reload: true))
     }
     
-    public func fetch(request: TableModel.GetPosts.Request) {
+    public func fetch(request: CollectionModel.Get.Request) {
         QueueManager.shared.execute(BlockOperation(block: {
             self.lock.lock()
             guard !self.loading && self.hasNext else {
@@ -73,7 +73,7 @@ open class TableInteractor<TPresenter: TablePresenterProtocol, TPresenterProtoco
                 self.offset += self.pageSize
                 self.loading = false
                 
-                (self.presenter as? TablePresenterProtocol)?.present(response: TableModel.GetPosts.Response(objects: objects, reload: request.reload))
+                (self.presenter as? CollectionPresenterProtocol)?.present(response: CollectionModel.Get.Response(objects: objects, reload: request.reload))
                 
                 self.didFetchMoreRows()
             } catch {
