@@ -27,7 +27,6 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
     override open func viewDidLoad() {
         super.viewDidLoad()
         self.collectionView.dataSource = self.collection
-        self.checkIsInfiniteScroll()
     }
     
     override open func viewWillLayoutSubviews() {
@@ -38,12 +37,7 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
             if height != headerView.frame.height {
                 headerView.frame.size.height = height
                 self.collectionView.tableHeaderView = headerView
-                if #available(iOS 11.0, *) {
-                    self.collectionView.performBatchUpdates({})
-                } else {
-                    self.collectionView.beginUpdates()
-                    self.collectionView.endUpdates()
-                }
+                self.collectionView.performBatchUpdates({})
             }
         }
     }

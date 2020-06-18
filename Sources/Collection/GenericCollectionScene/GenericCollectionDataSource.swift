@@ -13,6 +13,10 @@ public protocol CollectionView: NSObjectProtocol {
     func insert(at indexPaths: [IndexPath])
     func reload(at indexPaths: [IndexPath])
     func performBatchUpdates(_ updates: (() -> Void)?)
+    
+    @available(iOS 10.0, *)
+    func prefetchDataSource(_ prefetchDataSource: Any)
+    func delegate(_ delegate: Any)
     var refreshControl: UIRefreshControl? { get set }
 }
 
@@ -124,34 +128,4 @@ public class GenericCollectionDataSource<T: CollectionView>: NSObject {
         self.collection?.reloadData()
     }
     
-}
-
-extension UITableView: CollectionView {
-    public func insert(at indexPaths: [IndexPath]) {
-        self.insertRows(at: indexPaths, with: .automatic)
-    }
-    public func reload(at indexPaths: [IndexPath]) {
-        self.reloadRows(at: indexPaths, with: .automatic)
-    }
-    public func performBatchUpdates(_ updates: (() -> Void)?) {
-        if #available(iOS 11.0, *) {
-            self.performBatchUpdates(updates, completion: nil)
-        } else {
-            self.beginUpdates()
-            updates?()
-            self.endUpdates()
-        }
-    }
-}
-
-extension UICollectionView: CollectionView {
-    public func insert(at indexPaths: [IndexPath]) {
-        self.insertItems(at: indexPaths)
-    }
-    public func reload(at indexPaths: [IndexPath]) {
-        self.reloadItems(at: indexPaths)
-    }
-    public func performBatchUpdates(_ updates: (() -> Void)?) {
-        self.performBatchUpdates(updates, completion: nil)
-    }
 }

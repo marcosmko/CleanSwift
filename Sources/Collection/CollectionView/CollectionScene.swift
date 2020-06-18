@@ -18,21 +18,11 @@ open class CollectionScene<TInteractor: InteractorProtocol, TInteractorProtocol,
     open override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionView.dataSource = self.collection
-        self.checkOverridesRefresh(type: type(of: self))
     }
     
     open override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.collectionView.collectionViewLayout.invalidateLayout()
-    }
-    
-    private func checkOverridesRefresh(type: CollectionScene.Type) {
-        let originalMethod = class_getInstanceMethod(type, Selector(("refresh")))
-        if originalMethod != nil {
-            let refreshControl = UIRefreshControl()
-            refreshControl.addTarget(self, action: Selector(("refresh")), for: UIControl.Event.valueChanged)
-            self.collectionView.refreshControl = refreshControl
-        }
     }
     
 }

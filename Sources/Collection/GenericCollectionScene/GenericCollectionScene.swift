@@ -38,6 +38,7 @@ open class GenericCollectionScene<TInteractor: InteractorProtocol, TInteractorPr
         self.pageSize = 25
         self.setup(collection: self.collection)
         self.checkOverridesRefresh(type: type(of: self))
+        self.checkIsInfiniteScroll()
         self.refresh()
     }
     
@@ -50,6 +51,16 @@ open class GenericCollectionScene<TInteractor: InteractorProtocol, TInteractorPr
         }
     }
     
+    private func checkIsInfiniteScroll() {
+        if self.interactor is CollectionInteractorProtocol {
+            if #available(iOS 10.0, *) {
+                self.collectionView.prefetchDataSource(self.collection)
+            } else {
+                self.collectionView.delegate(self)
+            }
+        }
+    }
+    
     open func setup(collection: TCollectionDataSource) {
     }
     
@@ -58,7 +69,10 @@ open class GenericCollectionScene<TInteractor: InteractorProtocol, TInteractorPr
     }
     
     public func display(viewModel: CollectionModel.Get.ViewModel) {
-        // if viewModel.reload { self.collection.clear() }
+        // TODO: if is infinite scroll, if needs reloading, reload last section
+        if !(self.interactor is CollectionInteractorProtocol) && viewModel.reload {
+            self.collection.clear()
+        }
         self.collection.insert(sections: viewModel.sections)
     }
     
