@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name                      = 'CleanSwift'
-    s.version                   = '1.0.2'
+    s.version                   = '1.0.3'
     s.summary                   = 'A CleanSwift framework.'
     s.homepage                  = 'https://github.com/marcosmko/CleanSwift'
 
