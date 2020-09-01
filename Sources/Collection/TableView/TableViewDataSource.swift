@@ -8,117 +8,16 @@
 
 import Foundation
 
-protocol TableViewDataSourcePrefetching: class {
-    func tableViewPrefetch()
-}
-
-public class TableViewDataSource: NSObject {
-    
-    private weak var tableView: UITableView?
-    internal weak var delegate: NSObject?
-    internal weak var dataSourcePrefetching: TableViewDataSourcePrefetching?
-    
-    internal var sections: [Section] = []
-    private var identifiers: [String: String] = [:]
-    
-    private var shouldClear: Bool = false
-    internal var pageSize: Int = -1
-    
-    public init(tableView: UITableView, delegate: NSObject? = nil) {
-        self.tableView = tableView
-        self.delegate = delegate
-    }
-    
-    init(tableView: UITableView, dataSourcePrefetching: TableViewDataSourcePrefetching, delegate: NSObject? = nil) {
-        self.tableView = tableView
-        self.dataSourcePrefetching = dataSourcePrefetching
-        self.delegate = delegate
-    }
+public class TableViewDataSource: GenericCollectionDataSource<UITableView> {
     
     public func bind<TCell: GenericTableViewCell<TViewModel>, TViewModel: ViewModel>(cell: TCell.Type, to viewModel: TViewModel.Type) {
-        self.tableView?.register(UINib(nibName: "\(cell)", bundle: nil), forCellReuseIdentifier: "\(cell)")
+        self.collection?.register(UINib(nibName: "\(cell)", bundle: nil), forCellReuseIdentifier: "\(cell)")
         self.identifiers["\(viewModel)"] = "\(cell)"
     }
     
     public func bind<TCell: GenericTableViewCell<TViewModel>, TViewModel: ViewModel>(cell: TCell.Type, to viewModel: TViewModel.Type, forSupplementaryViewOfKind kind: String) {
-        self.tableView?.register(UINib(nibName: "\(cell)", bundle: nil), forHeaderFooterViewReuseIdentifier: "\(cell)")
+        self.collection?.register(UINib(nibName: "\(cell)", bundle: nil), forHeaderFooterViewReuseIdentifier: "\(cell)")
         self.identifiers["\(viewModel)"] = "\(cell)"
-    }
-    
-    public func clear() {
-        self.shouldClear = true
-    }
-    
-    public func insert(sections: [Section]) {
-        if self.shouldClear || self.sections.isEmpty {
-            // clear and reload
-            self.sections = sections
-            self.shouldClear = false
-            self.tableView?.reloadData()
-        } else {
-            // append to end
-            var sections = sections
-            var indexPaths: [IndexPath] = []
-            var forceReload: Bool = false
-            
-            for (xIndex, section) in self.sections.enumerated() {
-                for (index, newSection) in sections.enumerated() where section.viewModel?.tag == newSection.viewModel?.tag {
-                    if newSection.reload {
-                        section.items.removeAll()
-                        forceReload = true
-                    }
-                    
-                    let currentCount = section.items.count
-                    let newCount = newSection.items.count
-                    for current in currentCount..<currentCount+newCount {
-                        indexPaths.append(IndexPath(row: current, section: xIndex))
-                    }
-                    
-                    section.items.append(contentsOf: newSection.items)
-                    sections.remove(at: index)
-                }
-            }
-            
-            if !sections.isEmpty || forceReload {
-                self.sections.append(contentsOf: sections)
-                self.tableView?.reloadData()
-            } else if !indexPaths.isEmpty {
-                self.tableView?.beginUpdates()
-                self.tableView?.insertRows(at: indexPaths, with: .fade)
-                self.tableView?.endUpdates()
-            }
-        }
-        if self.tableView?.refreshControl?.isRefreshing ?? false {
-            self.tableView?.refreshControl?.endRefreshing()
-        }
-    }
-    
-    public func update(sections: [Section]) {
-        var indexPaths: [IndexPath] = []
-        for (xIndex, section) in self.sections.enumerated() {
-            for newSection in sections where section.viewModel?.tag == newSection.viewModel?.tag {
-                var items = section.items
-                
-                for (row, item) in section.items.enumerated() {
-                    for item3 in newSection.items where item.tag == item3.tag {
-                        items[row] = item3
-                        indexPaths.append(IndexPath(row: row, section: xIndex))
-                    }
-                }
-                
-                section.items = items
-            }
-        }
-        self.tableView?.beginUpdates()
-        self.tableView?.reloadRows(at: indexPaths, with: .automatic)
-        self.tableView?.endUpdates()
-    }
-    
-    public func remove(sections: [IndexPath]) {
-        for indexPath in sections.sorted().reversed() {
-            self.sections[indexPath.section].items.remove(at: indexPath.row)
-        }
-        self.tableView?.reloadData()
     }
     
 }
@@ -154,7 +53,7 @@ extension TableViewDataSource: UITableViewDataSourcePrefetching {
             indexPath.row > self.sections[indexPath.section].items.count - self.pageSize else {
                 return
         }
-        self.dataSourcePrefetching?.tableViewPrefetch()
+        self.dataSourcePrefetching?.prefetch()
     }
     
 }
