@@ -37,3 +37,28 @@ extension UITableView {
     }
     
 }
+
+extension UITableView: CollectionView {
+    public func delegate(_ delegate: Any) {
+        self.delegate = delegate as? UITableViewDelegate
+    }
+    @available(iOS 10.0, *)
+    public func prefetchDataSource(_ prefetchDataSource: Any) {
+        self.prefetchDataSource = prefetchDataSource as? UITableViewDataSourcePrefetching
+    }
+    public func insert(at indexPaths: [IndexPath]) {
+        self.insertRows(at: indexPaths, with: .automatic)
+    }
+    public func reload(at indexPaths: [IndexPath]) {
+        self.reloadRows(at: indexPaths, with: .automatic)
+    }
+    public func performBatchUpdates(_ updates: (() -> Void)?) {
+        if #available(iOS 11.0, *) {
+            self.performBatchUpdates(updates, completion: nil)
+        } else {
+            self.beginUpdates()
+            updates?()
+            self.endUpdates()
+        }
+    }
+}

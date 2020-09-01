@@ -8,18 +8,16 @@
 
 import UIKit
 
-open class CollectionScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: DataPassing, TRouterProtocol>: Scene<TInteractor, TInteractorProtocol, TRouter, TRouterProtocol>, CollectionSceneProtocol {
+open class CollectionScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: DataPassing, TRouterProtocol>: GenericCollectionScene<TInteractor, TInteractorProtocol, TRouter, TRouterProtocol, UICollectionView, CollectionViewDataSource> {
     
-    @IBOutlet public var collectionView: UICollectionView!
-    
-    public lazy var collection = CollectionViewDataSource(collectionView: self.collectionView)
+    @IBOutlet public override var collectionView: UICollectionView! {
+        get { super.collectionView }
+        set { super.collectionView = newValue }
+    }
     
     open override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionView.dataSource = self.collection
-        self.checkOverridesRefresh(type: type(of: self))
-        self.setup(collection: self.collection)
-        self.refresh()
     }
     
     open override func viewWillLayoutSubviews() {
@@ -27,27 +25,12 @@ open class CollectionScene<TInteractor: InteractorProtocol, TInteractorProtocol,
         self.collectionView.collectionViewLayout.invalidateLayout()
     }
     
-    open func setup(collection: CollectionViewDataSource) {
-    }
+}
+
+extension GenericCollectionScene: CollectionDataSourcePrefetching {
     
-    open func refresh() {
-    }
-    
-    private func checkOverridesRefresh(type: CollectionScene.Type) {
-        let originalMethod = class_getInstanceMethod(type, Selector(("refresh")))
-        if originalMethod != nil {
-            let refreshControl = UIRefreshControl()
-            refreshControl.addTarget(self, action: Selector(("refresh")), for: UIControl.Event.valueChanged)
-            self.collectionView.refreshControl = refreshControl
-        }
-    }
-    
-    open func beginRefreshing() {
-        self.collectionView.refreshControl?.beginRefreshing()
-    }
-    
-    open func endRefreshing() {
-        self.collectionView.refreshControl?.endRefreshing()
+    func prefetch() {
+        (self.interactor as? CollectionInteractorProtocol)?.fetch(request: CollectionModel.Get.Request(reload: false))
     }
     
 }

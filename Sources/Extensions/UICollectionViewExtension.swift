@@ -37,3 +37,22 @@ extension UICollectionView {
     }
     
 }
+
+extension UICollectionView: CollectionView {
+    public func delegate(_ delegate: Any) {
+        self.delegate = delegate as? UICollectionViewDelegate
+    }
+    @available(iOS 10.0, *)
+    public func prefetchDataSource(_ prefetchDataSource: Any) {
+        self.prefetchDataSource = prefetchDataSource as? UICollectionViewDataSourcePrefetching
+    }
+    public func insert(at indexPaths: [IndexPath]) {
+        self.insertItems(at: indexPaths)
+    }
+    public func reload(at indexPaths: [IndexPath]) {
+        self.reloadItems(at: indexPaths)
+    }
+    public func performBatchUpdates(_ updates: (() -> Void)?) {
+        self.performBatchUpdates(updates, completion: nil)
+    }
+}
