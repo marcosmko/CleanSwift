@@ -20,6 +20,16 @@ public class TableViewDataSource: GenericCollectionDataSource<UITableView> {
         self.identifiers["\(viewModel)"] = "\(cell)"
     }
     
+    public override func insert(sections: [Section], scrollToLast: Bool = false) {
+        super.insert(sections: sections, scrollToLast: scrollToLast)
+        
+        if scrollToLast, let collection = self.collection {
+            let section = self.numberOfSections(in: collection) - 1
+            let row = self.tableView(collection, numberOfRowsInSection: section) - 1
+            self.collection?.scrollToRow(at: IndexPath(row: row, section: section), at: .bottom, animated: true)
+        }
+    }
+    
 }
 
 extension TableViewDataSource: UITableViewDataSource {
