@@ -28,7 +28,9 @@ open class CollectionPresenter<TDisplayLogic, TEntity>: Presenter<TDisplayLogic>
             let section = Section(viewModel: self.viewModel(), items: items, reload: response.reload)
             (self.viewController as? CollectionDisplayLogic)?.display(
                 viewModel: CollectionModel.Get.ViewModel(
-                    sections: [section], reload: response.reload
+                    sections: [section],
+                    reload: response.reload,
+                    scrollToLast: response.scrollToLast
                 )
             )
         }), on: .main)
@@ -53,7 +55,18 @@ open class CollectionPresenter<TDisplayLogic, TEntity>: Presenter<TDisplayLogic>
     
     public func present(response: CollectionModel.Delete.Response) {
         QueueManager.shared.execute(BlockOperation(block: {
-            (self.viewController as? CollectionDisplayLogic)?.display(viewModel: CollectionModel.Delete.ViewModel(indexPath: response.indexPath))
+            var items: [ViewModel] = []
+            
+            for item in response.objects {
+                items.append(self.prepare(object: item as! TEntity))
+            }
+            
+            let section = Section(viewModel: self.viewModel(), items: items)
+            (self.viewController as? CollectionDisplayLogic)?.display(
+                viewModel: CollectionModel.Delete.ViewModel(
+                    sections: [section]
+                )
+            )
         }), on: .main)
     }
     
