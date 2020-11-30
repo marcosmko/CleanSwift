@@ -17,7 +17,7 @@ internal protocol CollectionDataSource: class {
     var pageSize: Int { get set }
 }
 
-open class CollectionInteractor<TPresenter: CollectionPresenterProtocol, TPresenterProtocol, TEntity>: Interactor<TPresenter, TPresenterProtocol>, CollectionDataSource {
+open class CollectionInteractor<TPresenter: CollectionPresenterProtocol, TPresenterProtocol, TEntity: Equatable>: Interactor<TPresenter, TPresenterProtocol>, CollectionDataSource {
     
     private var timestamp: Date = Date()
     private let lock = NSLock()
@@ -68,12 +68,17 @@ open class CollectionInteractor<TPresenter: CollectionPresenterProtocol, TPresen
                     self.objects = []
                 }
                 
-                self.hasNext = !(objects.count < self.pageSize) || !objects.isEmpty
+                self.hasNext = !objects.isEmpty
                 self.objects.append(contentsOf: objects)
-                self.offset += self.pageSize
+                self.offset += self.objects.count
                 self.loading = false
                 
-                (self.presenter as? CollectionPresenterProtocol)?.present(response: CollectionModel.Get.Response(objects: objects, reload: request.reload))
+                (self.presenter as? CollectionPresenterProtocol)?.present(
+                    response: CollectionModel.Get.Response(
+                        objects: objects,
+                        reload: request.reload
+                    )
+                )
                 
                 self.didFetchMoreRows()
             } catch {
@@ -84,6 +89,48 @@ open class CollectionInteractor<TPresenter: CollectionPresenterProtocol, TPresen
                 self.loading = false
             }
             
+        }), on: .concurrent)
+    }
+    
+    public func append(objects: [TEntity], scrollToLast: Bool) {
+        QueueManager.shared.execute(BlockOperation(block: {
+            self.lock.lock()
+            defer { self.lock.unlock() }
+            
+            self.objects.append(contentsOf: objects)
+            self.offset = self.objects.count
+            
+            (self.presenter as? CollectionPresenterProtocol)?.present(
+                response: CollectionModel.Get.Response(
+                    objects: objects,
+                    reload: false,
+                    scrollToLast: scrollToLast
+                )
+            )
+        }), on: .concurrent)
+    }
+    
+    public func delete(objects: [TEntity]) {
+        QueueManager.shared.execute(BlockOperation(block: {
+            self.lock.lock()
+            defer { self.lock.unlock() }
+            
+            var tempObjects: [TEntity?] = self.objects
+            
+            for objectToRemove in objects {
+                for (index, object) in tempObjects.enumerated() where object == objectToRemove {
+                    tempObjects.remove(at: index)
+                    break
+                }
+            }
+            self.objects = tempObjects.compactMap({ $0 })
+            self.offset = tempObjects.count
+            
+            (self.presenter as? CollectionPresenterProtocol)?.present(
+                response: CollectionModel.Delete.Response(
+                    objects: objects
+                )
+            )
         }), on: .concurrent)
     }
     

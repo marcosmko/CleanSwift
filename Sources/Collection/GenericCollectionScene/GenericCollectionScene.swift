@@ -73,7 +73,7 @@ open class GenericCollectionScene<TInteractor: InteractorProtocol, TInteractorPr
         if !(self.interactor is CollectionInteractorProtocol) && viewModel.reload {
             self.collection.clear()
         }
-        self.collection.insert(sections: viewModel.sections)
+        self.collection.insert(sections: viewModel.sections, scrollToLast: viewModel.scrollToLast)
     }
     
     public func display(viewModel: CollectionModel.Update.ViewModel) {
@@ -81,7 +81,7 @@ open class GenericCollectionScene<TInteractor: InteractorProtocol, TInteractorPr
     }
     
     public func display(viewModel: CollectionModel.Delete.ViewModel) {
-        self.collection.remove(sections: [viewModel.indexPath])
+        self.collection.remove(sections: viewModel.sections)
     }
     
     public func display(viewModel: CollectionModel.EndRefreshing.ViewModel) {

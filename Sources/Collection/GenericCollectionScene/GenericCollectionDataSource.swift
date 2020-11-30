@@ -51,7 +51,7 @@ public class GenericCollectionDataSource<T: CollectionView>: NSObject {
         self.shouldClear = true
     }
     
-    public func insert(sections: [Section]) {
+    public func insert(sections: [Section], scrollToLast: Bool = false) {
         if self.shouldClear || self.sections.isEmpty {
             // clear and reload
             self.sections = sections
@@ -102,18 +102,20 @@ public class GenericCollectionDataSource<T: CollectionView>: NSObject {
     
     public func update(sections: [Section]) {
         var indexPaths: [IndexPath] = []
-        for (xIndex, section) in self.sections.enumerated() {
-            for newSection in sections where section.viewModel?.tag == newSection.viewModel?.tag {
+        for newSection in sections {
+            for (xIndex, section) in self.sections.enumerated() where section.viewModel?.tag == newSection.viewModel?.tag {
                 var items = section.items
                 
-                for (row, item) in section.items.enumerated() {
-                    for item3 in newSection.items where item.tag == item3.tag {
+                for item3 in newSection.items {
+                    for (row, item) in section.items.enumerated() where item.tag == item3.tag {
                         items[row] = item3
                         indexPaths.append(IndexPath(row: row, section: xIndex))
+                        break
                     }
                 }
                 
                 section.items = items
+                break
             }
         }
         self.collection?.performBatchUpdates({
@@ -121,9 +123,21 @@ public class GenericCollectionDataSource<T: CollectionView>: NSObject {
         })
     }
     
-    public func remove(sections: [IndexPath]) {
-        for indexPath in sections.sorted().reversed() {
-            self.sections[indexPath.section].items.remove(at: indexPath.row)
+    public func remove(sections: [Section]) {
+        for sectionToDelete in sections {
+            for section in self.sections where section.viewModel?.tag == sectionToDelete.viewModel?.tag {
+                var items: [ViewModel?] = section.items
+                
+                for item3 in sectionToDelete.items {
+                    for (row, item) in section.items.enumerated() where item.tag == item3.tag {
+                        items[row] = nil
+                        break
+                    }
+                }
+                
+                section.items = items.compactMap({ $0 })
+                break
+            }
         }
         self.collection?.reloadData()
     }
