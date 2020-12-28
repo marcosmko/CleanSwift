@@ -42,6 +42,26 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
         }
     }
     
+    open override func refresh() {
+        super.refresh()
+        self.clearCache()
+    }
+    
+    public override func display(viewModel: CollectionModel.Get.ViewModel) {
+        super.display(viewModel: viewModel)
+        self.clearCache()
+    }
+    
+    public override func display(viewModel: CollectionModel.Update.ViewModel) {
+        super.display(viewModel: viewModel)
+        self.clearCache()
+    }
+    
+    public override func display(viewModel: CollectionModel.Delete.ViewModel) {
+        super.display(viewModel: viewModel)
+        self.clearCache()
+    }
+    
     public func clearCache() {
         self.heights = [:]
     }
