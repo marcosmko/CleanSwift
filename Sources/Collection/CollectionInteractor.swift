@@ -92,6 +92,24 @@ open class CollectionInteractor<TPresenter: CollectionPresenterProtocol, TPresen
         }), on: .concurrent)
     }
     
+    public func insert(objects: [TEntity]) {
+        // TODO: Insert objects at any index.
+        QueueManager.shared.execute(BlockOperation(block: {
+            self.lock.lock()
+            defer { self.lock.unlock() }
+            
+            self.objects.insert(contentsOf: objects, at: 0)
+            self.offset = self.objects.count
+            
+            (self.presenter as? CollectionPresenterProtocol)?.present(
+                response: CollectionModel.Get.Response(
+                    objects: self.objects,
+                    reload: true
+                )
+            )
+        }), on: .concurrent)
+    }
+    
     public func append(objects: [TEntity], scrollToLast: Bool) {
         QueueManager.shared.execute(BlockOperation(block: {
             self.lock.lock()
