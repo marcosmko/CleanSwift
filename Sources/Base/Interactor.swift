@@ -11,6 +11,7 @@ import UIKit.UIViewController
 
 public protocol InteractorProtocol: class {
     init(viewController: UIViewController)
+    func didLoad()
 }
 
 public protocol DataStore: class {
@@ -25,6 +26,9 @@ open class Interactor<TPresenter: PresenterProtocol, TPresenterProtocol> {
         self.presenter = TPresenter(viewController: viewController) as! TPresenterProtocol
         precondition(self is InteractorProtocol, "\(type(of: self)) must inherit from \(InteractorProtocol.self)")
         precondition(self is DataStore, "\(type(of: self)) must inherit from \(DataStore.self)")
+    }
+    
+    open func didLoad() {
     }
     
 }
