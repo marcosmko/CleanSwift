@@ -77,6 +77,7 @@ public class GenericCollectionDataSource<T: CollectionView>: NSObject {
                             indexPaths.append(IndexPath(row: current, section: xIndex))
                         }
                         
+                        section.viewModel = newSection.viewModel
                         section.items.append(contentsOf: newSection.items)
                         
                         return true
