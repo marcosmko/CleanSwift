@@ -10,6 +10,7 @@
 		F71EEE3A24488BAA00A633E1 /* CollectionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71EEE3924488BAA00A633E1 /* CollectionInteractor.swift */; };
 		F71F59C5249A988500A7FB88 /* GenericCollectionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71F59C4249A988500A7FB88 /* GenericCollectionScene.swift */; };
 		F72D6BEA238851E500FCA9E0 /* StaticTableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72D6BE9238851E500FCA9E0 /* StaticTableScene.swift */; };
+		F746CBE125D2DE8F00CACA6C /* GenericViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F746CBE025D2DE8F00CACA6C /* GenericViewHeaderFooterView.swift */; };
 		F762E91A24997A3C00CF9C21 /* GenericCollectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F762E91924997A3C00CF9C21 /* GenericCollectionDataSource.swift */; };
 		F776113B237B0C750092997D /* TableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776113A237B0C750092997D /* TableScene.swift */; };
 		F776113D237B0F570092997D /* CollectionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776113C237B0F570092997D /* CollectionScene.swift */; };
@@ -53,6 +54,7 @@
 		F71EEE3924488BAA00A633E1 /* CollectionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionInteractor.swift; sourceTree = "<group>"; };
 		F71F59C4249A988500A7FB88 /* GenericCollectionScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCollectionScene.swift; sourceTree = "<group>"; };
 		F72D6BE9238851E500FCA9E0 /* StaticTableScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticTableScene.swift; sourceTree = "<group>"; };
+		F746CBE025D2DE8F00CACA6C /* GenericViewHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		F762E91924997A3C00CF9C21 /* GenericCollectionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCollectionDataSource.swift; sourceTree = "<group>"; };
 		F776113A237B0C750092997D /* TableScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableScene.swift; sourceTree = "<group>"; };
 		F776113C237B0F570092997D /* CollectionScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionScene.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 			children = (
 				F7DA6B19237AF6C4000287FB /* GenericDelegateTableViewCell.swift */,
 				F7B15835237AEF0000FB4902 /* GenericTableViewCell.swift */,
+				F746CBE025D2DE8F00CACA6C /* GenericViewHeaderFooterView.swift */,
 				F72D6BE9238851E500FCA9E0 /* StaticTableScene.swift */,
 				F776113A237B0C750092997D /* TableScene.swift */,
 				F7B15833237AEEE200FB4902 /* TableViewDataSource.swift */,
@@ -383,6 +386,7 @@
 				F79BD72A2385C63B00341288 /* Section.swift in Sources */,
 				F7B15834237AEEE200FB4902 /* TableViewDataSource.swift in Sources */,
 				F79BD71E2385C01900341288 /* UICollectionViewExtension.swift in Sources */,
+				F746CBE125D2DE8F00CACA6C /* GenericViewHeaderFooterView.swift in Sources */,
 				F7C2529622FF5C1B002380BF /* Interactor.swift in Sources */,
 				F71F59C5249A988500A7FB88 /* GenericCollectionScene.swift in Sources */,
 				F77CA87A249A5B02001E831C /* CollectionPresenter.swift in Sources */,

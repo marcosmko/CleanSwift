@@ -15,7 +15,7 @@ public class TableViewDataSource: GenericCollectionDataSource<UITableView> {
         self.identifiers["\(viewModel)"] = "\(cell)"
     }
     
-    public func bind<TCell: GenericTableViewCell<TViewModel>, TViewModel: ViewModel>(cell: TCell.Type, to viewModel: TViewModel.Type, forSupplementaryViewOfKind kind: String) {
+    public func bind<TCell: GenericViewHeaderFooterView<TViewModel>, TViewModel: ViewModel>(cell: TCell.Type, to viewModel: TViewModel.Type, forSupplementaryViewOfKind kind: String) {
         self.collection?.register(UINib(nibName: "\(cell)", bundle: nil), forHeaderFooterViewReuseIdentifier: "\(cell)")
         self.identifiers["\(viewModel)"] = "\(cell)"
     }

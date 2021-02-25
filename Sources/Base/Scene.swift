@@ -56,6 +56,11 @@ open class Scene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: 
         self.setup()
     }
     
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        (self.interactor as! TInteractor).didLoad()
+    }
+    
     open override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let identifier = segue.identifier else { return }
         let selector = NSSelectorFromString("routeTo\(identifier)WithSegue:sender:")

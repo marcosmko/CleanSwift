@@ -32,7 +32,7 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
     override open func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        if let headerView = collectionView.tableHeaderView {
+        if let headerView = self.collectionView.tableHeaderView {
             let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
             if height != headerView.frame.height {
                 headerView.frame.size.height = height
@@ -88,7 +88,7 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
     
     // This will be used to cache cell height
     @objc
-    public func tableView(_ tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath) {
+    open func tableView(_ tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath) {
         return self.heights[indexPath] = cell.bounds.height
     }
     
@@ -98,4 +98,14 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
         return self.heights[indexPath] ?? UITableView.automaticDimension
     }
     
+    @objc
+    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let item = self.collection.sections[safe: section]?.viewModel,
+            let identifier = self.collection.identifiers[String(describing: type(of: item))] else {
+                return UITableViewHeaderFooterView(frame: .zero)
+        }
+        let reusableSupplementaryView = tableView.dequeueReusableHeaderFooterView(withIdentifier: identifier)
+        (reusableSupplementaryView as? GenericCellProtocol)?.prepare(viewModel: item)
+        return reusableSupplementaryView
+    }
 }
