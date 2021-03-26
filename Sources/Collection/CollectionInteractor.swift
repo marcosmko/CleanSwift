@@ -42,7 +42,7 @@ open class CollectionInteractor<TPresenter: CollectionPresenterProtocol, TPresen
         self.timestamp = Date()
     }
     
-    public func reload(request: CollectionModel.SetClear.Request) {
+    open func reload(request: CollectionModel.SetClear.Request) {
         self.clearOnNextLoad()
         self.fetch(request: CollectionModel.Get.Request(reload: true))
     }
