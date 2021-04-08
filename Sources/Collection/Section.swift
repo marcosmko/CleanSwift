@@ -9,12 +9,14 @@
 import Foundation
 
 public class Section {
-    public var viewModel: ViewModel?
+    public var headerViewModel: ViewModel?
+    public var footerViewModel: ViewModel?
     public var items: [ViewModel]
     public var reload: Bool
     
-    public init(viewModel: ViewModel? = nil, items: [ViewModel], reload: Bool = false) {
-        self.viewModel = viewModel
+    public init(headerViewModel: ViewModel? = nil, footerViewModel: ViewModel? = nil, items: [ViewModel], reload: Bool = false) {
+        self.headerViewModel = headerViewModel
+        self.footerViewModel = footerViewModel
         self.items = items
         self.reload = reload
     }
