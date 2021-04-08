@@ -65,7 +65,7 @@ public class GenericCollectionDataSource<T: CollectionView>: NSObject {
             
             for (xIndex, section) in self.sections.enumerated() {
                 sections.removeAll { (newSection) -> Bool in
-                    if section.viewModel?.tag == newSection.viewModel?.tag {
+                    if section.headerViewModel?.tag == newSection.headerViewModel?.tag {
                         if newSection.reload {
                             section.items.removeAll()
                             forceReload = true
@@ -77,7 +77,8 @@ public class GenericCollectionDataSource<T: CollectionView>: NSObject {
                             indexPaths.append(IndexPath(row: current, section: xIndex))
                         }
                         
-                        section.viewModel = newSection.viewModel
+                        section.headerViewModel = newSection.headerViewModel
+                        section.footerViewModel = newSection.footerViewModel
                         section.items.append(contentsOf: newSection.items)
                         
                         return true
@@ -104,7 +105,7 @@ public class GenericCollectionDataSource<T: CollectionView>: NSObject {
     public func update(sections: [Section]) {
         var indexPaths: [IndexPath] = []
         for newSection in sections {
-            for (xIndex, section) in self.sections.enumerated() where section.viewModel?.tag == newSection.viewModel?.tag {
+            for (xIndex, section) in self.sections.enumerated() where section.headerViewModel?.tag == newSection.headerViewModel?.tag {
                 var items = section.items
                 
                 for item3 in newSection.items {
@@ -126,7 +127,7 @@ public class GenericCollectionDataSource<T: CollectionView>: NSObject {
     
     public func remove(sections: [Section]) {
         for sectionToDelete in sections {
-            for section in self.sections where section.viewModel?.tag == sectionToDelete.viewModel?.tag {
+            for section in self.sections where section.headerViewModel?.tag == sectionToDelete.headerViewModel?.tag {
                 var items: [ViewModel?] = section.items
                 
                 for item3 in sectionToDelete.items {
