@@ -25,7 +25,7 @@ open class CollectionPresenter<TDisplayLogic, TEntity>: Presenter<TDisplayLogic>
                 items.append(self.prepare(object: item as! TEntity))
             }
             
-            let section = Section(viewModel: self.viewModel(), items: items, reload: response.reload)
+            let section = Section(headerViewModel: self.headerViewModel(), footerViewModel: self.footerViewModel(), items: items, reload: response.reload)
             (self.viewController as? CollectionDisplayLogic)?.display(
                 viewModel: CollectionModel.Get.ViewModel(
                     sections: [section],
@@ -44,7 +44,7 @@ open class CollectionPresenter<TDisplayLogic, TEntity>: Presenter<TDisplayLogic>
                 items.append(self.prepare(object: item as! TEntity))
             }
             
-            let section = Section(viewModel: self.viewModel(), items: items)
+            let section = Section(headerViewModel: self.headerViewModel(), footerViewModel: self.footerViewModel(), items: items)
             (self.viewController as? CollectionDisplayLogic)?.display(
                 viewModel: CollectionModel.Update.ViewModel(
                     sections: [section]
@@ -61,7 +61,7 @@ open class CollectionPresenter<TDisplayLogic, TEntity>: Presenter<TDisplayLogic>
                 items.append(self.prepare(object: item as! TEntity))
             }
             
-            let section = Section(viewModel: self.viewModel(), items: items)
+            let section = Section(headerViewModel: self.headerViewModel(), footerViewModel: self.footerViewModel(), items: items)
             (self.viewController as? CollectionDisplayLogic)?.display(
                 viewModel: CollectionModel.Delete.ViewModel(
                     sections: [section]
@@ -79,7 +79,11 @@ open class CollectionPresenter<TDisplayLogic, TEntity>: Presenter<TDisplayLogic>
         }), on: .main)
     }
     
-    open func viewModel() -> ViewModel? {
+    open func headerViewModel() -> ViewModel? {
+        return nil
+    }
+    
+    open func footerViewModel() -> ViewModel? {
         return nil
     }
     

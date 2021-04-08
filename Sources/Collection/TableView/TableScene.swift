@@ -100,7 +100,7 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
     
     @objc
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let item = self.collection.sections[safe: section]?.viewModel,
+        guard let item = self.collection.sections[safe: section]?.headerViewModel,
             let identifier = self.collection.identifiers[String(describing: type(of: item))] else {
                 return UITableViewHeaderFooterView(frame: .zero)
         }
@@ -108,4 +108,16 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
         (reusableSupplementaryView as? GenericCellProtocol)?.prepare(viewModel: item)
         return reusableSupplementaryView
     }
+    
+    @objc
+    open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        guard let item = self.collection.sections[safe: section]?.footerViewModel,
+            let identifier = self.collection.identifiers[String(describing: type(of: item))] else {
+                return UITableViewHeaderFooterView(frame: .zero)
+        }
+        let reusableSupplementaryView = tableView.dequeueReusableHeaderFooterView(withIdentifier: identifier)
+        (reusableSupplementaryView as? GenericCellProtocol)?.prepare(viewModel: item)
+        return reusableSupplementaryView
+    }
+    
 }

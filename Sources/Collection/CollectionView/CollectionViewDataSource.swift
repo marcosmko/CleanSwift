@@ -44,11 +44,19 @@ extension CollectionViewDataSource: UICollectionViewDataSource {
     }
     
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let item = self.sections[safe: indexPath.section]?.viewModel,
-            let identifier = self.identifiers[String(describing: type(of: item))] else {
-                return UICollectionViewCell(frame: .zero)
+        var viewModel: ViewModel?
+        if kind == UICollectionView.elementKindSectionHeader {
+            viewModel = self.sections[safe: indexPath.section]?.headerViewModel
+        } else if kind == UICollectionView.elementKindSectionHeader {
+            viewModel = self.sections[safe: indexPath.section]?.footerViewModel
         }
-        let reusableSupplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: identifier, for: indexPath)
+        
+        guard let item = viewModel, let identifier = self.identifiers[String(describing: type(of: item))] else {
+            return UICollectionViewCell(frame: .zero)
+        }
+        let reusableSupplementaryView = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind, withReuseIdentifier: identifier, for: indexPath
+        )
         (reusableSupplementaryView as? GenericCellProtocol)?.prepare(viewModel: item)
         return reusableSupplementaryView
     }
