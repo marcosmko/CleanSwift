@@ -19,7 +19,7 @@ open class GenericCollectionScene<TInteractor: InteractorProtocol, TInteractorPr
     
     public internal(set) var collectionView: TView!
     
-    public lazy var collection: TCollectionDataSource =
+    open private(set) lazy var collection: TCollectionDataSource =
         TCollectionDataSource(
             collection: collectionView,
             dataSourcePrefetching: self,

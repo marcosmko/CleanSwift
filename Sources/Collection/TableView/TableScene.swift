@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: DataPassing, TRouterProtocol>: GenericCollectionScene<TInteractor, TInteractorProtocol, TRouter, TRouterProtocol, UITableView, TableViewDataSource> {
+open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: DataPassing, TRouterProtocol>: GenericCollectionScene<TInteractor, TInteractorProtocol, TRouter, TRouterProtocol, UITableView, TableViewDataSource>, TableViewDataSourceDeleting {
     
     @IBOutlet override public var collectionView: UITableView! {
         get { super.collectionView }
@@ -45,6 +45,13 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
     open override func refresh() {
         super.refresh()
         self.clearCache()
+    }
+    
+    open func canEditRow(at indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    open func delete(indexPath: IndexPath) {
     }
     
     public override func display(viewModel: CollectionModel.Get.ViewModel) {
