@@ -9,5 +9,5 @@
 import Foundation
 
 protocol GenericCellDelegateProtocol {
-    func prepare(indexPath: IndexPath, delegate: NSObject?)
+    func prepare(indexPath: IndexPath, delegate: AnyObject?)
 }

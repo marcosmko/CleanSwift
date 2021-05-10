@@ -20,14 +20,14 @@ public protocol CollectionView: NSObjectProtocol {
     var refreshControl: UIRefreshControl? { get set }
 }
 
-protocol CollectionDataSourcePrefetching: class {
+protocol CollectionDataSourcePrefetching: AnyObject {
     func prefetch()
 }
 
 public class GenericCollectionDataSource<T: CollectionView>: NSObject {
     
     internal weak var collection: T?
-    internal weak var delegate: NSObject?
+    internal weak var delegate: AnyObject?
     internal weak var dataSourcePrefetching: CollectionDataSourcePrefetching?
     
     internal var sections: [Section] = []
@@ -36,12 +36,12 @@ public class GenericCollectionDataSource<T: CollectionView>: NSObject {
     internal var shouldClear: Bool = false
     internal var pageSize: Int = -1
     
-    required public init(collection: T, delegate: NSObject? = nil) {
+    required public init(collection: T, delegate: AnyObject? = nil) {
         self.collection = collection
         self.delegate = delegate
     }
     
-    required init(collection: T, dataSourcePrefetching: CollectionDataSourcePrefetching, delegate: NSObject? = nil) {
+    required init(collection: T, dataSourcePrefetching: CollectionDataSourcePrefetching, delegate: AnyObject? = nil) {
         self.collection = collection
         self.dataSourcePrefetching = dataSourcePrefetching
         self.delegate = delegate
