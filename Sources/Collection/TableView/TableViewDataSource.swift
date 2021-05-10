@@ -8,6 +8,11 @@
 
 import Foundation
 
+protocol TableViewDataSourceDeleting: AnyObject {
+    func canEditRow(at indexPath: IndexPath) -> Bool
+    func delete(indexPath: IndexPath)
+}
+
 public class TableViewDataSource: GenericCollectionDataSource<UITableView> {
     
     public func bind<TCell: GenericTableViewCell<TViewModel>, TViewModel: ViewModel>(cell: TCell.Type, to viewModel: TViewModel.Type) {
@@ -51,6 +56,14 @@ extension TableViewDataSource: UITableViewDataSource {
         (cell as? GenericCellProtocol)?.prepare(viewModel: item)
         (cell as? GenericCellDelegateProtocol)?.prepare(indexPath: indexPath, delegate: self.delegate)
         return cell
+    }
+    
+    public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return (self.delegate as? TableViewDataSourceDeleting)?.canEditRow(at: indexPath) ?? false
+    }
+    
+    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        (self.delegate as? TableViewDataSourceDeleting)?.delete(indexPath: indexPath)
     }
     
 }

@@ -13,7 +13,7 @@ open class GenericDelegateTableViewCell<T: ViewModel, D: GenericCellDelegate>: G
     public private(set) var indexPath: IndexPath = IndexPath(item: -1, section: -1)
     public private(set) weak var delegate: D?
     
-    func prepare(indexPath: IndexPath, delegate: NSObject?) {
+    func prepare(indexPath: IndexPath, delegate: AnyObject?) {
         self.indexPath = indexPath
         self.delegate = delegate as? D
     }
