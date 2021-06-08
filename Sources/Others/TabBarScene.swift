@@ -18,12 +18,12 @@ open class TabBarScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRo
         }
     }
     
-    private var _interactor: TInteractorProtocol!
+    private lazy var _interactor: TInteractorProtocol! = TInteractor(viewController: self) as? TInteractorProtocol
     public var interactor: TInteractorProtocol {
         return self._interactor
     }
     
-    private var _router: TRouter!
+    private lazy var _router: TRouter! = TRouter(dataStore: self.interactor, viewController: self)
     public var router: TRouter {
         return self._router
     }
@@ -32,11 +32,6 @@ open class TabBarScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRo
         precondition(self is DisplayLogic, "\(type(of: self)) must inherit from \(DisplayLogic.self)")
         precondition(TInteractor.self is TInteractorProtocol, "\(TInteractor.self) must inherit from \(TInteractorProtocol.self)")
         precondition(TRouter.self is TRouterProtocol, "\(TRouter.self) must inherit from \(TRouterProtocol.self)")
-        let viewController = self
-        let interactor = TInteractor(viewController: self)
-        let router = TRouter(dataStore: interactor, viewController: self)
-        viewController._interactor = interactor as? TInteractorProtocol
-        viewController._router = router
     }
     
     public convenience init() {
