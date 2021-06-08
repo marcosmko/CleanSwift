@@ -1,17 +1,14 @@
 //
-//  Scene.swift
+//  TabBarScene.swift
 //  CleanSwift
 //
-//  Created by Marcos Kobuchi on 10/08/19.
-//  Copyright © 2019 Undercaffeine. All rights reserved.
+//  Created by Marcos Kobuchi on 01/06/21.
+//  Copyright © 2021 Undercaffeine. All rights reserved.
 //
 
 import UIKit
 
-public protocol DisplayLogic: AnyObject {
-}
-
-open class Scene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: DataPassing, TRouterProtocol>: UIViewController {
+open class TabBarScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRouter: DataPassing, TRouterProtocol>: UITabBarController {
     
     open public(set) override var title: String? {
         get { super.title }

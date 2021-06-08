@@ -24,6 +24,7 @@
 		F79BD72C2385C68C00341288 /* GenericDelegateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79BD72B2385C68C00341288 /* GenericDelegateCollectionViewCell.swift */; };
 		F79BD7302385C88600341288 /* GenericCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79BD72F2385C88600341288 /* GenericCellDelegate.swift */; };
 		F79BD7322385C8B900341288 /* GenericCellDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79BD7312385C8B900341288 /* GenericCellDelegateProtocol.swift */; };
+		F7A6FA29266673BE00500034 /* TabBarScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A6FA28266673BE00500034 /* TabBarScene.swift */; };
 		F7AB0A73237AE646006E6141 /* GenericCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AB0A72237AE646006E6141 /* GenericCollectionViewCell.swift */; };
 		F7B15830237AEE1800FB4902 /* GenericCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B1582F237AEE1800FB4902 /* GenericCellProtocol.swift */; };
 		F7B15834237AEEE200FB4902 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B15833237AEEE200FB4902 /* TableViewDataSource.swift */; };
@@ -68,6 +69,7 @@
 		F79BD72B2385C68C00341288 /* GenericDelegateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericDelegateCollectionViewCell.swift; sourceTree = "<group>"; };
 		F79BD72F2385C88600341288 /* GenericCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCellDelegate.swift; sourceTree = "<group>"; };
 		F79BD7312385C8B900341288 /* GenericCellDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCellDelegateProtocol.swift; sourceTree = "<group>"; };
+		F7A6FA28266673BE00500034 /* TabBarScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarScene.swift; sourceTree = "<group>"; };
 		F7AB0A72237AE646006E6141 /* GenericCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7B1582F237AEE1800FB4902 /* GenericCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCellProtocol.swift; sourceTree = "<group>"; };
 		F7B15833237AEEE200FB4902 /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
@@ -135,6 +137,14 @@
 			path = GenericCell;
 			sourceTree = "<group>";
 		};
+		F7A6FA272666734D00500034 /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				F7A6FA28266673BE00500034 /* TabBarScene.swift */,
+			);
+			path = Others;
+			sourceTree = "<group>";
+		};
 		F7AB0A71237AE636006E6141 /* Collection */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +205,7 @@
 		F7C2527A22FF5C04002380BF /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				F7A6FA272666734D00500034 /* Others */,
 				F7EF85EB2385B7EA003B5450 /* Mechanisms */,
 				F7944E1D237AE6FF0066E9A2 /* Extensions */,
 				F7AB0A71237AE636006E6141 /* Collection */,
@@ -367,6 +378,7 @@
 			files = (
 				F7EF85ED2385B7FE003B5450 /* QueueManager.swift in Sources */,
 				F7AB0A73237AE646006E6141 /* GenericCollectionViewCell.swift in Sources */,
+				F7A6FA29266673BE00500034 /* TabBarScene.swift in Sources */,
 				F7E5B42C2361EE97005FF212 /* ViewModel.swift in Sources */,
 				F776113B237B0C750092997D /* TableScene.swift in Sources */,
 				F79BD7322385C8B900341288 /* GenericCellDelegateProtocol.swift in Sources */,
