@@ -128,6 +128,20 @@ open class CollectionInteractor<TPresenter: CollectionPresenterProtocol, TPresen
         }), on: .concurrent)
     }
     
+    public func replace(object: TEntity, index: Int) {
+        QueueManager.shared.execute(BlockOperation(block: {
+            self.lock.lock()
+            defer { self.lock.unlock() }
+            
+            self.objects[index] = object
+            (self.presenter as? CollectionPresenterProtocol)?.present(
+                response: CollectionModel.Update.Response(
+                    objects: [object]
+                )
+            )
+        }), on: .concurrent)
+    }
+    
     public func delete(objects: [TEntity]) {
         QueueManager.shared.execute(BlockOperation(block: {
             self.lock.lock()
