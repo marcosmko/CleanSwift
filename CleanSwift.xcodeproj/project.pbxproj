@@ -39,6 +39,7 @@
 		F7DA6B1A237AF6C4000287FB /* GenericDelegateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DA6B19237AF6C4000287FB /* GenericDelegateTableViewCell.swift */; };
 		F7E5B42C2361EE97005FF212 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E5B42B2361EE97005FF212 /* ViewModel.swift */; };
 		F7EF85ED2385B7FE003B5450 /* QueueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EF85EC2385B7FE003B5450 /* QueueManager.swift */; };
+		F7F832302704FA8F005FA47E /* GenericDelegateViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F8322F2704FA8F005FA47E /* GenericDelegateViewHeaderFooterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		F7DA6B19237AF6C4000287FB /* GenericDelegateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericDelegateTableViewCell.swift; sourceTree = "<group>"; };
 		F7E5B42B2361EE97005FF212 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		F7EF85EC2385B7FE003B5450 /* QueueManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueManager.swift; sourceTree = "<group>"; };
+		F7F8322F2704FA8F005FA47E /* GenericDelegateViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericDelegateViewHeaderFooterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				F7DA6B19237AF6C4000287FB /* GenericDelegateTableViewCell.swift */,
+				F7F8322F2704FA8F005FA47E /* GenericDelegateViewHeaderFooterView.swift */,
 				F7B15835237AEF0000FB4902 /* GenericTableViewCell.swift */,
 				F746CBE025D2DE8F00CACA6C /* GenericViewHeaderFooterView.swift */,
 				F72D6BE9238851E500FCA9E0 /* StaticTableScene.swift */,
@@ -378,6 +381,7 @@
 			files = (
 				F7EF85ED2385B7FE003B5450 /* QueueManager.swift in Sources */,
 				F7AB0A73237AE646006E6141 /* GenericCollectionViewCell.swift in Sources */,
+				F7F832302704FA8F005FA47E /* GenericDelegateViewHeaderFooterView.swift in Sources */,
 				F7A6FA29266673BE00500034 /* TabBarScene.swift in Sources */,
 				F7E5B42C2361EE97005FF212 /* ViewModel.swift in Sources */,
 				F776113B237B0C750092997D /* TableScene.swift in Sources */,

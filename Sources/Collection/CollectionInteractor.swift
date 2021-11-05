@@ -13,7 +13,7 @@ public protocol CollectionInteractorProtocol: InteractorProtocol {
     func reload(request: CollectionModel.SetClear.Request)
 }
 
-internal protocol CollectionDataSource: class {
+internal protocol CollectionDataSource: AnyObject {
     var pageSize: Int { get set }
 }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class GenericDelegateCollectionViewCell<T: ViewModel, D: GenericCellDelegate>: GenericTableViewCell<T>, GenericCellDelegateProtocol {
+open class GenericDelegateCollectionViewCell<T: ViewModel, D: GenericCellDelegate>: GenericCollectionViewCell<T>, GenericCellDelegateProtocol {
     
     public private(set) var indexPath: IndexPath = IndexPath(item: -1, section: -1)
     public private(set) weak var delegate: D?
