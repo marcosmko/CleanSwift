@@ -53,8 +53,8 @@ extension TableViewDataSource: UITableViewDataSource {
                 return UITableViewCell(frame: .zero)
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
+        (cell as? GenericCellDelegateProtocol)?.prepare?(indexPath: indexPath, delegate: self.delegate)
         (cell as? GenericCellProtocol)?.prepare(viewModel: item)
-        (cell as? GenericCellDelegateProtocol)?.prepare(indexPath: indexPath, delegate: self.delegate)
         return cell
     }
     
