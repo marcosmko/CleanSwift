@@ -8,6 +8,8 @@
 
 import Foundation
 
+@objc
 protocol GenericCellDelegateProtocol {
-    func prepare(indexPath: IndexPath, delegate: AnyObject?)
+    @objc optional func prepare(indexPath: IndexPath, delegate: AnyObject?)
+    @objc optional func prepare(section: Int, delegate: AnyObject?)
 }

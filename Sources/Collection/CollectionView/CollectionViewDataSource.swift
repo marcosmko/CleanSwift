@@ -38,8 +38,8 @@ extension CollectionViewDataSource: UICollectionViewDataSource {
                 return UICollectionViewCell(frame: .zero)
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
+        (cell as? GenericCellDelegateProtocol)?.prepare?(indexPath: indexPath, delegate: self.delegate)
         (cell as? GenericCellProtocol)?.prepare(viewModel: item)
-        (cell as? GenericCellDelegateProtocol)?.prepare(indexPath: indexPath, delegate: self.delegate)
         return cell
     }
     

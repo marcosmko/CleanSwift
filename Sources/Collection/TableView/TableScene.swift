@@ -112,6 +112,7 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
                 return UITableViewHeaderFooterView(frame: .zero)
         }
         let reusableSupplementaryView = tableView.dequeueReusableHeaderFooterView(withIdentifier: identifier)
+        (reusableSupplementaryView as? GenericCellDelegateProtocol)?.prepare?(section: section, delegate: self)
         (reusableSupplementaryView as? GenericCellProtocol)?.prepare(viewModel: item)
         return reusableSupplementaryView
     }
@@ -123,6 +124,7 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
                 return UITableViewHeaderFooterView(frame: .zero)
         }
         let reusableSupplementaryView = tableView.dequeueReusableHeaderFooterView(withIdentifier: identifier)
+        (reusableSupplementaryView as? GenericCellDelegateProtocol)?.prepare?(section: section, delegate: self)
         (reusableSupplementaryView as? GenericCellProtocol)?.prepare(viewModel: item)
         return reusableSupplementaryView
     }

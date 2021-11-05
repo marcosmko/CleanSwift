@@ -9,15 +9,17 @@
 import Foundation
 import UIKit.UIViewController
 
-public protocol InteractorProtocol: class {
+public protocol InteractorProtocol: AnyObject {
     init(viewController: UIViewController)
     func didLoad()
 }
 
-public protocol DataStore: class {
+public protocol DataStore: AnyObject {
 }
 
 open class Interactor<TPresenter: PresenterProtocol, TPresenterProtocol> {
+    
+    open var screen: String { "" }
     
     public let presenter: TPresenterProtocol
     
