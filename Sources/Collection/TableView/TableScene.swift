@@ -36,7 +36,15 @@ open class TableScene<TInteractor: InteractorProtocol, TInteractorProtocol, TRou
             let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
             if height != headerView.frame.height {
                 headerView.frame.size.height = height
+                self.collectionView.tableHeaderView = nil
                 self.collectionView.tableHeaderView = headerView
+                headerView.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([NSLayoutConstraint(
+                    item: headerView, attribute: .width,
+                    relatedBy: .equal,
+                    toItem: self.collectionView, attribute: .width,
+                    multiplier: 1, constant: 0
+                )])
                 self.collectionView.performBatchUpdates({})
             }
         }

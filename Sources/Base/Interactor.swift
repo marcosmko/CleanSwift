@@ -17,7 +17,7 @@ public protocol InteractorProtocol: AnyObject {
 public protocol DataStore: AnyObject {
 }
 
-open class Interactor<TPresenter: PresenterProtocol, TPresenterProtocol> {
+open class Interactor<TPresenter: PresenterProtocol, TPresenterProtocol>: CustomReflectable {
     
     open var screen: String { "" }
     
@@ -31,6 +31,10 @@ open class Interactor<TPresenter: PresenterProtocol, TPresenterProtocol> {
     }
     
     open func didLoad() {
+    }
+    
+    public var customMirror: Mirror {
+        return Mirror(self, children: ["presenter": self.presenter])
     }
     
 }

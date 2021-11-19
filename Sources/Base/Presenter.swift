@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol PresenterProtocol: class {
+public protocol PresenterProtocol: AnyObject {
     init(viewController: UIViewController)
 }
 
@@ -28,4 +28,5 @@ open class Presenter<TDisplayLogic>: CustomReflectable {
     public var customMirror: Mirror {
         return Mirror(self, children: ["viewController": self.viewController])
     }
+    
 }

@@ -9,6 +9,6 @@
 import Foundation
 
 @objc
-public protocol GenericCellDelegate: class {
+public protocol GenericCellDelegate: AnyObject {
     
 }
