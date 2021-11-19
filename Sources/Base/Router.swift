@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public protocol RouterProtocol: class {
+public protocol RouterProtocol: AnyObject {
 }
 
 public protocol DataPassing: NSObjectProtocol {
