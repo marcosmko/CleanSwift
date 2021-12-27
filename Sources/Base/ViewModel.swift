@@ -15,3 +15,10 @@ public protocol ViewModel {
 public extension ViewModel {
     var tag: Int { return -1 }
 }
+
+public struct EmptyViewModel: ViewModel {
+    public let tag: Int
+    public init(tag: Int) {
+        self.tag = tag
+    }
+}
